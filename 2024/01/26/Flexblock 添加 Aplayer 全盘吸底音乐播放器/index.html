@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });   
+  </script>  
+
+
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="Ty Leo">
+  
+
+  
+
+  
+
+  <title>Flexblock 添加 Aplayer 全盘吸底音乐播放器 | Ty Leo&#39;s BLOG</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Ty Leo&#39;s BLOG
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">Flexblock 添加 Aplayer 全盘吸底音乐播放器</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ty Leo</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-01-26T13:17:03.966Z" itemprop="datePublished">2024-01-26</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2024-01-28T13:32:01.277Z" itemprop="dateUpdated">2024-01-28</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h3 id="安装aplayer"><a href="#安装aplayer" class="headerlink" title="安装aplayer"></a>安装aplayer</h3><p>在博客文件夹根目录打开git bash 并执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
+
+<p>安装完之后会发现<code>/node_modules</code>下多了一个aplayer</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/OgimMKr9.png" alt="图1"></p>
+<p>将其中的dist文件夹复制粘贴到主题目录下source文件中。</p>
+<h3 id="创建aplayer播放器样式"><a href="#创建aplayer播放器样式" class="headerlink" title="创建aplayer播放器样式"></a>创建aplayer播放器样式</h3><p>新建一个music.js 文件，并输入以下内容，放到主题的source文件夹中(我放在source&#x2F;js&#x2F;diy&#x2F;music.js)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ap = <span class="keyword">new</span> <span class="title class_">APlayer</span>(&#123;</span><br><span class="line">    <span class="attr">container</span>: <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;aplayer&#x27;</span>),</span><br><span class="line">    <span class="attr">autoplay</span>: <span class="literal">false</span>, </span><br><span class="line">    <span class="attr">loop</span>: <span class="string">&#x27;all&#x27;</span>,</span><br><span class="line">    <span class="attr">volume</span>: <span class="number">0.7</span>,</span><br><span class="line">    <span class="attr">listFolded</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">listMaxHeight</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="attr">fixed</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">audio</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;MOM&quot;</span>, <span class="comment">//歌曲名字</span></span><br><span class="line">        <span class="attr">artist</span>: <span class="string">&#x27;是二智呀&#x27;</span>, <span class="comment">//歌曲作者</span></span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;http://music.163.com/song/media/outer/url?id=1433338551.mp3&#x27;</span>, <span class="comment">//歌曲url链接</span></span><br><span class="line">        <span class="attr">cover</span>: <span class="string">&#x27;https://p2.music.126.net/xpLjGFEOzWFhs_-4iMsnNw==/109951165112858259.jpg?param=130y130&#x27;</span>, <span class="comment">//歌曲封面</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123; <span class="comment">//如果只有一首歌以下部分可不要，如果有多首歌就就按此格式添加</span></span><br><span class="line">            <span class="attr">name</span>: <span class="string">&quot;Take me Hand&quot;</span>,</span><br><span class="line">            <span class="attr">artist</span>: <span class="string">&#x27;Cécile Corbel&#x27;</span>,</span><br><span class="line">            <span class="attr">url</span>: <span class="string">&#x27;https://nf-sycdn.kuwo.cn/161f4edbf309527a7284755fb8c31f1c/65b317df/resource/n2/31/83/2354335626.mp3&#x27;</span>,</span><br><span class="line">            <span class="attr">cover</span>: <span class="string">&#x27;https://img1.kuwo.cn/star/albumcover/500/21/99/3057700581.jpg&#x27;</span>,	</span><br><span class="line">            &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2.imgtp.com/2024/01/26/CClHs6rk.png" alt="图2"></p>
+<p>更多aplayer播放器参数配置信息请查看<a target="_blank" rel="noopener" href="https://blog.yleao.com/2018/0902/hexo%E4%B8%8A%E7%9A%84aplayer%E5%BA%94%E7%94%A8.html#%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9">hexo上的aplayer应用</a></p>
+<h3 id="部署到页面"><a href="#部署到页面" class="headerlink" title="部署到页面"></a>部署到页面</h3><p>如果你只需要在主页面吸底显示，则将以下代码添加到<code>\themes\flexblock\layout\_partial\footer.ejs</code>中即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/APlayer.min.css&quot;&gt;</span><br><span class="line">&lt;div id=&quot;aplayer&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/dist/APlayer.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/diy/music.js&quot;&gt;&lt;/script&gt; &lt;!-- 注意这里的src的链接是你自己创建的music.js文件的地址 --&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果你想要实现全局吸底，请将以上代码移动到<code>&quot;themes\flexblock\layout\_partial\footer-other.ejs&quot;</code>中</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/8UWmnVsi.png" alt="图3"></p>
+<h3 id="使用pjax实现全局播放"><a href="#使用pjax实现全局播放" class="headerlink" title="使用pjax实现全局播放"></a>使用pjax实现全局播放</h3><p>将以下代码放入<code>layout/layout.ejs</code> 文件中的在<code>head</code>标签里面，<code>body</code>标签外(比如在开头)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 对所有链接跳转事件绑定pjax容器pjax-container </span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  $(<span class="variable language_">document</span>).<span class="title function_">pjax</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;#pjax-container&#x27;</span>, &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">fragment</span>:<span class="string">&#x27;#pjax-container&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">timeout</span>:<span class="number">8000</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;);   </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2.imgtp.com/2024/01/26/O5kyhITI.png" alt="图4"></p>
+<p>然后在<code>layout.ejs</code>中添加上<code>id=&quot;pjax-container&quot;</code>并退出保存。</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/zLuVpNqx.png" alt="图5"></p>
+<p>然后打开<code>&quot;\blog\themes\flexblock\layout\_partial\header.ejs&quot;</code> ，并在其中也加上<code>id=&quot;pjax-container&quot;</code>并退出保存。</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/uNAZRMJy.png" alt="图6"></p>
+<p>再打开<code>&quot;\blog\themes\flexblock\layout\_partial\nav.ejs&quot;</code>，也在其中加上<code>id=&quot;pjax-container&quot;</code>，并退出保存。</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/57C9Mamx.png" alt="图7"></p>
+<p>此时，如果还不行，请进行以下步骤</p>
+<p>打开<code>&quot;\themes\flexblock\layout\plug-in\aplayer.ejs&quot;</code>,将其中的内容全部注释。</p>
+<p>至此，Ok。附一张效果图</p>
+<p><img src="https://img2.imgtp.com/2024/01/26/WaCf6wpP.png" alt="图8"></p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>作为一个小白，为了在自己博客上添加一个音乐播放器，我两天尝试了n种方法，终于找到了一种适配flexblock主题的方案。本文是在a-c-dream大佬的教程基础上，解决从文章返回首页时，卡片的封面加载不出来问题。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://a-c-dream.github.io/2024/01/01/flexblock-%E6%B7%BB%E5%8A%A0-aplayer-%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/">flexblock 添加 aplayer 音乐播放器 | (a-c-dream.github.io)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.yleao.com/2018/0902/hexo%E4%B8%8A%E7%9A%84aplayer%E5%BA%94%E7%94%A8.html#%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9">hexo上的aplayer应用 | Y’s BLOG (yleao.com)</a></li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/01/25/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Markdown使用方法</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+    <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
+      <div id="valine_thread" class="valine-thread"></div>
+    </div>
+    <script type="text/javascript" src="//unpkg.com/leancloud-storage@3.15.0/dist/av-min.js"></script>
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script type="text/javascript">
+      new Valine({
+        el: "#valine_thread",
+        appId: "tms1SKQ9qCRebgrGMR6zXFLo-gzGzoHsz",
+        appKey: "k9E2SBegqPX3JuZjIABhvzc9",
+        placeholder: "随便说点什么叭～",
+        avatar: "mp",
+        pageSize: 10,
+        lang: "zh-cn",
+        visitor: true,
+        recordIP: true,
+        enableQQ: true,
+        meta: ['nick'],
+        requiredFields: ['nick'],
+        
+        // Bilibili 表情包插件
+        // 设置 Bilibili 表情包地址
+        emojiCDN: '//i0.hdslb.com/bfs/emote/', 
+        // 表情 title 和图片映射
+        emojiMaps: {
+            // 小黄脸
+            "2023": "fa6dda8b876ed38609de38aa604be5ad109b8591.png",
+            "足球": "f9157d9fa5ac3b8339cb8a8b7ad70eb40d4113c9.png",
+            "脱单doge": "bf7e00ecab02171f8461ee8cf439c73db9797748.png",
+            "微笑": "685612eadc33f6bc233776c6241813385844f182.png",
+            "口罩": "3ad2f66b151496d2a5fb0a8ea75f32265d778dd3.png",
+            "doge": "3087d273a78ccaff4bb1e9972e2ba2a7583c9f11.png",
+            "妙啊": "b4cb77159d58614a9b787b91b1cd22a81f383535.png",
+            "OK": "4683fd9ffc925fa6423110979d7dcac5eda297f4.png",
+            "星星眼": "63c9d1a31c0da745b61cdb35e0ecb28635675db2.png",
+            "辣眼睛": "35d62c496d1e4ea9e091243fa812866f5fecc101.png",
+            "吃瓜": "4191ce3c44c2b3df8fd97c33f85d3ab15f4f3c84.png",
+            "滑稽": "d15121545a99ac46774f1f4465b895fe2d1411c3.png",
+            "呲牙": "b5a5898491944a4268360f2e7a84623149672eb6.png",
+            "打call": "431432c43da3ee5aab5b0e4f8931953e649e9975.png",
+            "歪嘴": "4384050fbab0586259acdd170b510fe262f08a17.png",
+            "调皮": "8290b7308325e3179d2154327c85640af1528617.png",
+            "2022": "a783df2ce72952c44004007462324bde4b092a0c.png",
+            "虎年": "a062f5fa2bafe677e49b6963a2bbb11dd4fe1e11.png",
+            "豹富": "3d1dbe52ea16e12ff7b1c371196f728a4097fb33.png",
+            "嗑瓜子": "28a91da1685d90124cfeead74622e1ebb417c0eb.png",
+            "笑哭": "c3043ba94babf824dea03ce500d0e73763bf4f40.png",
+            "藏狐": "ba0937ef6f3ccca85e2e0047e6263f3b4da37201.png",
+            "脸红": "0922c375da40e6b69002bd89b858572f424dcfca.png",
+            "给心心": "1597302b98827463f5b75c7cac1f29ea6ce572c4.png",
+            "嘟嘟": "abd7404537d8162720ccbba9e0a8cdf75547e07a.png",
+            "哦呼": "362bded07ea5434886271d23fa25f5d85d8af06c.png",
+            "喜欢": "8a10a4d73a89f665feff3d46ca56e83dc68f9eb8.png",
+            "酸了": "92b1c8cbceea3ae0e8e32253ea414783e8ba7806.png",
+            "嫌弃": "de4c0783aaa60ec03de0a2b90858927bfad7154b.png",
+            "大哭": "2caafee2e5db4db72104650d87810cc2c123fc86.png",
+            "害羞": "9d2ec4e1fbd6cb1b4d12d2bbbdd124ccb83ddfda.png",
+            "疑惑": "b7840db4b1f9f4726b7cb23c0972720c1698d661.png",
+            "喜极而泣": "485a7e0c01c2d70707daae53bee4a9e2e31ef1ed.png",
+            "奸笑": "bb84906573472f0a84cebad1e9000eb6164a6f5a.png",
+            "笑": "81edf17314cea3b48674312b4364df44d5c01f17.png",
+            "偷笑": "6c49d226e76c42cd8002abc47b3112bc5a92f66a.png",
+            "惊讶": "f8e9a59cad52ae1a19622805696a35f0a0d853f3.png",
+            "捂脸": "6921bb43f0c634870b92f4a8ad41dada94a5296d.png",
+            "阴险": "ba8d5f8e7d136d59aab52c40fd3b8a43419eb03c.png",
+            "囧": "12e41d357a9807cc80ef1e1ed258127fcc791424.png",
+            "呆": "33ad6000d9f9f168a0976bc60937786f239e5d8c.png",
+            "抠鼻": "cb89184c97e3f6d50acfd7961c313ce50360d70f.png",
+            "大笑": "ca94ad1c7e6dac895eb5b33b7836b634c614d1c0.png",
+            "惊喜": "0afecaf3a3499479af946f29749e1a6c285b6f65.png",
+            "无语": "44667b7d9349957e903b1b62cb91fb9b13720f04.png",
+            "点赞": "1a67265993913f4c35d15a6028a30724e83e7d35.png",
+            "鼓掌": "895d1fc616b4b6c830cf96012880818c0e1de00d.png",
+            "尴尬": "cb321684ed5ce6eacdc2699092ab8fe7679e4fda.png",
+            "灵魂出窍": "43d3db7d97343c01b47e22cfabeca84b4251f35a.png",
+            "委屈": "d2f26cbdd6c96960320af03f5514c5b524990840.png",
+            "傲娇": "010540d0f61220a0db4922e4a679a1d8eca94f4e.png",
+            "疼": "905fd9a99ec316e353b9bd4ecd49a5f0a301eabf.png",
+            "冷": "cb0ebbd0668640f07ebfc0e03f7a18a8cd00b4ed.png",
+            "热": "4e58a2a6f5f1580ac33df2d2cf7ecad7d9ab3635.png",
+            "生病": "0f25ce04ae1d7baf98650986454c634f6612cb76.png",
+            "吓": "9c10c5ebc7bef27ec641b8a1877674e0c65fea5d.png",
+            "吐": "06946bfe71ac48a6078a0b662181bb5cad09decc.png",
+            "捂眼": "c5c6d6982e1e53e478daae554b239f2b227b172b.png",
+            "嘘声": "e64af664d20716e090f10411496998095f62f844.png",
+            "思考": "cfa9b7e89e4bfe04bbcd34ccb1b0df37f4fa905c.png",
+            "再见": "fc510306bae26c9aec7e287cdf201ded27b065b9.png",
+            "翻白眼": "eba54707c7168925b18f6f8b1f48d532fe08c2b1.png",
+            "哈欠": "888d877729cbec444ddbd1cf4c9af155a7a06086.png",
+            "奋斗": "bb2060c15dba7d3fd731c35079d1617f1afe3376.png",
+            "墨镜": "3a03aebfc06339d86a68c2d893303b46f4b85771.png",
+            "难过": "a651db36701610aa70a781fa98c07c9789b11543.png",
+            "撇嘴": "531863568e5668c5ac181d395508a0eeb1f0cda4.png",
+            "抓狂": "4c87afff88c22439c45b79e9d2035d21d5622eba.png",
+            "生气": "3195714219c4b582a4fb02033dd1519913d0246d.png",
+            "水稻": "d530fcaa5100ba12a17a79b55bad342d530c54e3.png",
+            "奶茶干杯": "d5a491990be551ce69f9660da948050df4eab331.png",
+            "汤圆": "93609633a9d194cf336687eb19c01dca95bde719.png",
+            "锦鲤": "643d6c19c8164ffd89e3e9cdf093cf5d773d979c.png",
+            "弹幕破百亿": "80891223ba023dff3141e377f4ea3b89918eb6a4.png",
+            "福到了": "5de5373d354c373cf1617b6b836f3a8d53c5a655.png",
+            "鸡腿": "c7860392815d345fa69c4f00ef18d67dccfbd574.png",
+            "雪花": "a41813c4edf8782047e172c884ebd4507ce5e449.png",
+            "视频卫星": "dce6fc7d6dfeafff01241924db60f8251cca5307.png",
+            "干杯": "8da12d5f55a2c7e9778dcc05b40571979fe208e6.png",
+            "黑洞": "e90ec4c799010f25391179118ccd9f66b3b279ba.png",
+            "爱心": "ed04066ea7124106d17ffcaf75600700e5442f5c.png",
+            "胜利": "b49fa9f4b1e7c3477918153b82c60b114d87347c.png",
+            "加油": "c7aaeacb21e107292d3bb053e5abde4a4459ed30.png",
+            "抱拳": "89516218158dbea18ab78e8873060bf95d33bbbe.png",
+            "响指": "1b5c53cf14336903e1d2ae3527ca380a1256a077.png",
+            "保佑": "fafe8d3de0dc139ebe995491d2dac458a865fb30.png",
+            "福": "802429a301ac5b35a0480d9526a070ce67cd8097.png",
+            "支持": "3c210366a5585706c09d4c686a9d942b39feeb50.png",
+            "拥抱": "41780a4254750cdaaccb20735730a36044e98ef3.png",
+            "跪了": "f2b3aee7e521de7799d4e3aa379b01be032698ac.png",
+            "怪我咯": "07cc6077f7f7d75b8d2c722dd9d9828a9fb9e46d.png",
+            "老鼠": "8e6fb491eb1bb0d5862e7ec8ccf9a3da12b6c155.png",
+            "牛年": "9275275ff1f2659310648221107d20bc4970f106.png",
+            "三星堆": "fc7dadaa6986e75b813aa26f3eff3281d5f1a6d1.png",
+            "洛天依": "9fe06f3594d9afaf4ee2b74770f1c3086ae0ba11.png",
+            "坎公骑冠剑_吃鸡": "c4248a7b6ab326d66c83fd1fb58f1a50f99df332.png",
+            "坎公骑冠剑_钻石": "0b97c7e50e0cc963370e62fbb9b55f51bbe7f8ab.png",
+            "坎公骑冠剑_无语": "80eba0ce64c3fc1279b4daede2f1979cb2380e78.png",
+            "来古-沉思": "4ee07ff03266d62b246be0b950bebb2abf3d997c.png",
+            "来古-呆滞": "9a70b365e523f2379f395031ceefcebb75a45903.png",
+            "来古-疑问": "032fdc0d9d9fe6334776f6c39518a959b73b98f4.png",
+            "来古-震撼": "8b40f228675602a317d32007de6b795c101135ec.png",
+            "来古-注意": "4b671ba32a2581cf40e5cd41c67b111eb8010de0.png",
+            "初音未来_大笑": "8e7f71cda83ce407b0684702983399f8ed982f17.png",
+            "原神_哇": "8188ddf95bace929d382c7a83214afde79d83bfc.png",
+            "原神_哼": "91ed33b74bc36873c3ac8b2648f70d7ab6d8ab78.png",
+            "原神_嗯": "8b0a87e414f453a29730b6e0f45ca61f2f898688.png",
+            "原神_欸嘿": "8fba438fcbe0550877b04efd768d857082307c5e.png",
+            "原神_喝茶": "1de5789fbb3526ef7823c54db7081790a38e7044.png",
+            "原神_生气": "90a38c34742899f8e84138ed55f56cad3ba611fb.png",
+            "保卫萝卜_白眼": "9fce63f38288700bf7be84f3be336cf895ba0902.png",
+            "保卫萝卜_笔芯": "5ff2ed5cb71b02010018cc5910ac7052a03769af.png",
+            "保卫萝卜_哭哭": "7d249f7c990111d3e2982f7477af15b7eb29cbd9.png",
+            "保卫萝卜_哇": "5f2370e561c32d841245f7b1aab2eef43aeb9544.png",
+            "保卫萝卜_问号": "41eb93f09fc4a4d0692a310e8a1f85ba60e96060.png",
+            "无悔华夏_不愧是你": "c58002c32ee78d45366e126f294cb3149dd64ac2.png",
+            "无悔华夏_吃瓜": "273dcff577551bafff4f1eae18561f871e73a6ba.png",
+            "无悔华夏_达咩": "cffab383f47bab7f6736ba9c8d6ac098113410d9.png",
+            "无悔华夏_点赞": "b0f2e8db405ec667c3e6aaabd7c15155b6ea8710.png",
+            "无悔华夏_好耶": "324cd79784aeb37dbf2f47f68bbe8ed5d01f975e.png",
+            "奥比岛_搬砖": "1fab697214918d91087373a999cc7ef8040ddf85.png",
+            "奥比岛_点赞": "fb0b476fe2ff30cd59385ea7d616627ac114161f.png",
+            "奥比岛_击爪": "35bba1bb8f164c5e844155548438248e6eaa8382.png",
+            "奥比岛_委屈": "fda155e7c33b40dbb94c24644e0635d47b6ef3cc.png",
+            "奥比岛_喜欢": "ed64e0c81ee194138bd9df30c65077ed978fb88c.png",
+            // tv_小电视
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            // ... 更多表情
+        }
+        
+      });
+    </script>
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://img2.imgtp.com/2024/01/25/uyAFRUZN.png" class="soft-size--round soft-style--box" alt="Ty Leo">
+    
+    
+      <h2>Ty Leo</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>2</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85aplayer"><span class="toc-number">1.</span> <span class="toc-text">安装aplayer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAaplayer%E6%92%AD%E6%94%BE%E5%99%A8%E6%A0%B7%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">创建aplayer播放器样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E9%A1%B5%E9%9D%A2"><span class="toc-number">3.</span> <span class="toc-text">部署到页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8pjax%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E6%92%AD%E6%94%BE"><span class="toc-number">4.</span> <span class="toc-text">使用pjax实现全局播放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">5.</span> <span class="toc-text">写在最后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number"></span> <span class="toc-text">参考文献</span></a>
+  </div>
+</section>
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/ty-leo" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">Ty Leo</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css">
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+
+
+</body>
+</html>
