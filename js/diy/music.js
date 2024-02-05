@@ -10,7 +10,7 @@ const ap = new APlayer({
         {
         name: "MOM",
         artist: '是二智呀',
-        url: 'http://music.163.com/song/media/outer/url?id=1433338551.mp3',
+        url: 'https://music.163.com/song/media/outer/url?id=1433338551.mp3',
         cover: 'https://p2.music.126.net/xpLjGFEOzWFhs_-4iMsnNw==/109951165112858259.jpg?param=130y130',	
         },
         {
