@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#3367D6"/>
   <link rel="apple-touch-icon" href="/icons-192.png">
   <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
   
   <meta name="generator" content="Hexo 7.1.1">
 
@@ -48,7 +53,7 @@
 <!-- header container -->
 <header class="header-container post" id="pjax-container">
   
-    <div class="post-image" style="background-image: url(https://img2.baidu.com/it/u=2072065255,2878465820&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=800&amp;h=500)"></div>
+    <div class="post-image" style="background-image: url(https://pic1.zhimg.com/70/v2-6122509b3df9a514504b6bce665dfee8_1440w.awebp?source=172ae18b&amp;biz_tag=Post)"></div>
   
 
   <!-- navbar -->
@@ -73,9 +78,9 @@
         
           <li class="navbar-list-item"><a href="/">首页</a></li>
         
-          <li class="navbar-list-item"><a href="/message">留言</a></li>
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
         
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
+          <li class="navbar-list-item"><a href="/about/">关于</a></li>
         
       </ul>
     </div>
@@ -108,14 +113,9 @@
           
             <h2 class="last-time">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-14T10:08:22.746Z" itemprop="dateUpdated">2024-02-14</time>
+              <time  class="article-updated" datetime="2024-02-15T12:32:39.171Z" itemprop="dateUpdated">2024-02-15</time>
             </h2>
           
-          
-            <h2 id="/blogs/c049.html" class="title-sub-wrap leancloud_visitors" data-flag-title="Markdown使用方法">
-              <em>文章访问量</em>
-              <i class="leancloud-visitors-count"></i>
-            </h2>
           
           <ul class="wrap-list dark">
   
@@ -338,7 +338,6 @@
       <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
     </p>
   </div>
-
 </footer>
   </div>
   <div class="back-to-top-fixed soft-size--round soft-style--box">
@@ -389,23 +388,23 @@
     <div id="aplayer"></div>
     <script type="text/javascript" src="/dist/APlayer.min.js"></script>
     <script type="text/javascript" src="/js/diy/music.js"></script>
-    <p>
-      <script type="text/javascript" src="//unpkg.com/leancloud-storage@4.12.0/dist/av-min.js"></script>
-      <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    </p>
+</div>
 
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
 </div>
 
 
 
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
-<script>
-// 对所有链接跳转事件绑定pjax容器pjax-container 
-  $(document).pjax('a', '#pjax-container', {
-    fragment:'#pjax-container',
-    timeout:8000
-    });   
-</script>  
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
 </html>

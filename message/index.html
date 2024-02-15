@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#3367D6"/>
   <link rel="apple-touch-icon" href="/icons-192.png">
   <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
   
   <meta name="generator" content="Hexo 7.1.1">
 
@@ -73,9 +78,9 @@
         
           <li class="navbar-list-item"><a href="/">首页</a></li>
         
-          <li class="navbar-list-item"><a href="/message">留言</a></li>
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
         
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
+          <li class="navbar-list-item"><a href="/about/">关于</a></li>
         
       </ul>
     </div>
@@ -126,7 +131,7 @@
 
       
       
-        <section class="page-message-container layout-padding">
+        <section class="page-message-container layout-padding" id="pjax-container">
           
 
 
@@ -135,20 +140,22 @@
     <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
       <div id="valine_thread" class="valine-thread"></div>
     </div>
+
     <script type="text/javascript" src="//unpkg.com/leancloud-storage@4.12.0/dist/av-min.js"></script>
     <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
     <script type="text/javascript">
       new Valine({
         el: "#valine_thread",
-        app_id: "tms1SKQ9qCRebgrGMR6zXFLo-gzGzoHsz",
-        app_key: "k9E2SBegqPX3JuZjIABhvzc9",
+        appId: "tms1SKQ9qCRebgrGMR6zXFLo-gzGzoHsz",
+        appKey: "k9E2SBegqPX3JuZjIABhvzc9",
         placeholder: "随便说点什么吧～",
         avatar: "Gravatar",
         pageSize: 10,
         lang: "zh-cn",
-        visitor: true,
         recordIP: true,
         enableQQ: true,
+        path: window.location.pathname,
         meta: ['nick'],
         requiredFields: ['nick'],
         
@@ -454,7 +461,6 @@
       <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
     </p>
   </div>
-
 </footer>
   </div>
   <div class="back-to-top-fixed soft-size--round soft-style--box">
@@ -505,23 +511,23 @@
     <div id="aplayer"></div>
     <script type="text/javascript" src="/dist/APlayer.min.js"></script>
     <script type="text/javascript" src="/js/diy/music.js"></script>
-    <p>
-      <script type="text/javascript" src="//unpkg.com/leancloud-storage@4.12.0/dist/av-min.js"></script>
-      <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    </p>
+</div>
 
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
 </div>
 
 
 
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
-<script>
-// 对所有链接跳转事件绑定pjax容器pjax-container 
-  $(document).pjax('a', '#pjax-container', {
-    fragment:'#pjax-container',
-    timeout:8000
-    });   
-</script>  
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
 </html>
