@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="Ty Leo">
+  
+
+  
+
+  
+
+  <title>爬虫 | Ty Leo&#39;s BLOG</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Ty Leo&#39;s BLOG
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">爬虫</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ty Leo</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-02-28T12:49:51.823Z" itemprop="datePublished">2024-02-28</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">📒 学习笔记</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/Python/">🏷️ Python</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="IP查询"><a href="#IP查询" class="headerlink" title="IP查询"></a>IP查询</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getHTMl_ip</span>(<span class="params">url</span>):   <span class="comment">#ip查询  url = &quot;https://ipchaxun.com/&quot;</span></span><br><span class="line">    headers = &#123;<span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8&quot;</span>,</span><br><span class="line">               <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.16 Safari/537.36&quot;</span>&#125;</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url+<span class="string">&#x27;182.46.236.11&#x27;</span>,timeout=<span class="number">30</span>,headers=headers)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text[<span class="number">2605</span>:<span class="number">2800</span>]</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;出现异常&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="图片爬取"><a href="#图片爬取" class="headerlink" title="图片爬取"></a>图片爬取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getHTMl_picure</span>(<span class="params">url</span>):   <span class="comment">#爬取图片</span></span><br><span class="line">    root = <span class="string">&quot;D://picture//&quot;</span></span><br><span class="line">    path = root+url.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(root):</span><br><span class="line">            os.mkdir(root)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path):</span><br><span class="line">            r = requests.get(url)</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(path,<span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(r.content)</span><br><span class="line">                f.close()</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;文件保存成功&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;文件已存在&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;爬取失败&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="百度关键字搜索"><a href="#百度关键字搜索" class="headerlink" title="百度关键字搜索"></a>百度关键字搜索</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getHTMl_keyword</span>(<span class="params">url</span>):   <span class="comment">#百度/360关键字搜索 url = &quot;https://www.baidu.com/s&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        kv = &#123;<span class="string">&#x27;wd&#x27;</span>: <span class="string">&#x27;python&#x27;</span>&#125;</span><br><span class="line">        headers = &#123;<span class="string">&quot;Accept&quot;</span>:<span class="string">&quot;image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;User-Agent&quot;</span>:<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.16 Safari/537.36&quot;</span>&#125;</span><br><span class="line">        r = requests.get(url,params=kv,headers=headers)  <span class="comment">#通过params字段,将关键字加入url链接中</span></span><br><span class="line">        r.raise_for_status()  <span class="comment">#如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">len</span>(r.text))</span><br><span class="line">        <span class="built_in">print</span>(r.request.headers)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;出现异常&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="HTML页面获取"><a href="#HTML页面获取" class="headerlink" title="HTML页面获取"></a>HTML页面获取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">beautiful_soup</span>(<span class="params">url</span>):                     <span class="comment">#通过BeautifulSoup获取html内容标准格式</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        demo = r.text</span><br><span class="line">        soup = BeautifulSoup(demo,<span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> soup.prettify()</span><br><span class="line">        <span class="comment"># return soup.prettify()</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;出现异常&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基于bs4库的HTML应用"><a href="#基于bs4库的HTML应用" class="headerlink" title="基于bs4库的HTML应用"></a>基于bs4库的HTML应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">text</span>(<span class="params">url</span>):  <span class="comment">#基于bs4库的HTML应用</span></span><br><span class="line">    <span class="keyword">try</span>: <span class="comment">#contents 返回子类标签 生成一个列表  children.....</span></span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        demo = r.text</span><br><span class="line">        soup = BeautifulSoup(demo, <span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">        tag = soup.a</span><br><span class="line">        <span class="string">&quot;&quot;&quot;print(soup.html.parent.prettify())  #f返回父类标签</span></span><br><span class="line"><span class="string">        for parent in soup.a.parents:     #标签树的上行遍历  a为标签</span></span><br><span class="line"><span class="string">            if parent is None:</span></span><br><span class="line"><span class="string">                print(parent)</span></span><br><span class="line"><span class="string">            else:</span></span><br><span class="line"><span class="string">                print(parent.name)</span></span><br><span class="line"><span class="string">        for sibling in soup.a.next_siblings:     #标签树的平行遍历,遍历后续节点</span></span><br><span class="line"><span class="string">            print(sibling)</span></span><br><span class="line"><span class="string">        for sibling in soup.a.previous_siblings:     #标签树的平行遍历,遍历前续节点</span></span><br><span class="line"><span class="string">        #     print(sibling)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># for link in soup.find_all(&#x27;a&#x27;):   #返回标签a的href链接</span></span><br><span class="line">        <span class="comment">#     print(link.get(&#x27;href&#x27;))</span></span><br><span class="line">        <span class="comment"># for tag in soup.find_all(re.compile(&#x27;b&#x27;)):   #返回以b开头的所有标签</span></span><br><span class="line">        <span class="comment">#     print(tag.name)</span></span><br><span class="line">        <span class="comment"># for attrs in soup.find_all(&#x27;p&#x27;,&#x27;course&#x27;):  # 返回带有course属性值的标签</span></span><br><span class="line">        <span class="comment">#     print(attrs)</span></span><br><span class="line">        <span class="comment">#     print(soup.find_all(id=re.compile(&#x27;link&#x27;)))</span></span><br><span class="line">        <span class="built_in">print</span>(soup.find_all(string = re.<span class="built_in">compile</span>(<span class="string">&quot;python&quot;</span>)))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="comment"># return soup.a.prettify()</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;出现异常&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实例–获取中国大学排名"><a href="#实例–获取中国大学排名" class="headerlink" title="实例–获取中国大学排名"></a>实例–获取中国大学排名</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> bs4</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getHTMLtext</span>(<span class="params">url</span>):  <span class="comment">#获取html内容</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">        <span class="comment"># return soup.prettify()</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fillUnivList</span>(<span class="params">ulist,html</span>):   <span class="comment">#将html页面放到ulist列表中(核心)</span></span><br><span class="line">     soup = BeautifulSoup(html,<span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">     <span class="keyword">for</span> tr <span class="keyword">in</span> soup.find(<span class="string">&#x27;tbody&#x27;</span>).children:</span><br><span class="line">         <span class="keyword">if</span> <span class="built_in">isinstance</span>(tr,bs4.element.Tag):    <span class="comment">#检测tr标签的类型是否为bs4库定义的tag类型,不是则过滤掉</span></span><br><span class="line">            a = tr(<span class="string">&#x27;a&#x27;</span>)  <span class="comment">#将所有的a标签存为一个列表类型</span></span><br><span class="line">            tds = tr(<span class="string">&#x27;td&#x27;</span>)   <span class="comment">#对tr标签中的td标签做查询</span></span><br><span class="line">            ulist.append([tds[<span class="number">0</span>].text.strip(),a[<span class="number">0</span>].text.strip(),tds[<span class="number">4</span>].text.strip()])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printUnivList</span>(<span class="params">ulist,num</span>):  <span class="comment">#打印输出ulist列表信息,num表示打印的数量</span></span><br><span class="line">    tplt = <span class="string">&quot;&#123;0:^5&#125;\t&#123;1:&#123;3&#125;^15&#125;\t&#123;2:^5&#125;&quot;</span>   <span class="comment">#&#123;3&#125;表示使用format里面第三个变量填充 中文空格</span></span><br><span class="line">    <span class="built_in">print</span>(tplt.<span class="built_in">format</span>(<span class="string">&quot;排名&quot;</span>,<span class="string">&quot;学校名称&quot;</span>,<span class="string">&quot;总分&quot;</span>,<span class="built_in">chr</span>(<span class="number">12288</span>)))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        u = ulist[i]</span><br><span class="line">        <span class="built_in">print</span>(tplt.<span class="built_in">format</span>(u[<span class="number">0</span>], u[<span class="number">1</span>], u[<span class="number">2</span>],<span class="built_in">chr</span>(<span class="number">12288</span>)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():  <span class="comment">#定义主函数</span></span><br><span class="line">    uinfo = []</span><br><span class="line">    url = <span class="string">&quot;https://www.shanghairanking.cn/rankings/bcur/2023&quot;</span></span><br><span class="line">    html = getHTMLtext(url)</span><br><span class="line">    fillUnivList(uinfo, html)</span><br><span class="line">    printUnivList(uinfo, <span class="number">20</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例–淘宝商品信息定向爬取"><a href="#实例–淘宝商品信息定向爬取" class="headerlink" title="实例–淘宝商品信息定向爬取"></a>实例–淘宝商品信息定向爬取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getHTMLtext</span>(<span class="params">url</span>):  <span class="comment">#获取html内容  获取不到内容，不知道哪里有问题</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        kv = &#123;<span class="string">&quot;user-agent&quot;</span>:<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.0.0&quot;</span>,</span><br><span class="line">              <span class="string">&quot;cookie&quot;</span>:<span class="string">&quot;cna=ZDxuHaiYU0gCAXAJZPKACun6; xlly_s=1; t=cb2b528f38950479c040270c69dfe5d0; sgcookie=E100cQeHV4KntWivIK%2BavGIQtZocvt%2BhPw%2FKYR%2BL1%2FE8NWhb3TAH5c4Y6C%2Fj%2BBXLIfTX0K8oxwEG%2FaNyESKEp6BUdxl8CRZzXTFSPXM7c0fV6Xh3rCZPXvFB9NWhTAQTmUsW; uc3=id2=UNGToAjW7o5SSg%3D%3D&amp;vt3=F8dCsGZKBPow2Sp%2BemE%3D&amp;nk2=EOkytQM4LNRD&amp;lg2=UIHiLt3xD8xYTw%3D%3D; lgc=s%5Cu8FFD%5Cu68A6%5Cu7684%5Cu4EBA; uc4=nk4=0%40EjAlHR3uudIQGMI6Up6rlwJJUIY%3D&amp;id4=0%40UgbrDhBIeguk%2F%2B8T4oj7DRIQ9QTv; tracknick=s%5Cu8FFD%5Cu68A6%5Cu7684%5Cu4EBA; _cc_=W5iHLLyFfA%3D%3D; thw=cn; mt=ci=-1_0; uc1=cookie14=Uoe9b6DcK7ZVMA%3D%3D; _tb_token_=fe37598b7870b; _m_h5_tk=f00303acfdc3b90cb1d43b5fe0371ddc_1692932775023; _m_h5_tk_enc=4a26e5a47ffa21a8d0e0931c32fd5af5; JSESSIONID=BA7E8C8BFE703DBE2FD2AE79DCD31037; tfstk=drVyHAVqu_CrWJD3KAlU7y2hMEl-OfI1aWiI-y4nP0moVy0nToqCy0ah2kPEmye5yvsJ8UF4bBO52TUHTXGhfG111zUS9Xj_iJ5_ygTmTss111aRE0-6UGsLGgYCUSZv5a_x3G4im7Z3XhgFGro2tC8tzYmd6mRHTSuzrcXaGH30r_VLUHvEEq3qfZ72czDw3; l=fBP8mhoVN8dmxcHEBOfZPurza77tIIRYSuPzaNbMi9fPO35p5UHAW1todA89CnGVF6oDR3zvqD8WBeYBqIccSQLy2j-lasHmnm9SIEf..; isg=BFRUABKVzOCQWVis0Ea7zTXoJZLGrXiXt0YBOe41519i2fQjFr8wJj9b3dHBJLDv&quot;</span>&#125;</span><br><span class="line">        r = requests.get(url,headers=kv,timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">        <span class="comment"># return soup.prettify()</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;获取页面失败&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">prasePage</span>(<span class="params">ilt,html</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        plt = re.findall(<span class="string">r&#x27;\&quot;view_price\&quot;\:\&quot;[\d\.]*\&quot;&#x27;</span>,html)   <span class="comment">#\表示引入符号</span></span><br><span class="line">        tlt = re.findall(<span class="string">r&#x27;\&quot;raw_title\&quot;\:\&quot;.?\&quot;&#x27;</span>, html)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(plt)):</span><br><span class="line">            price = <span class="built_in">eval</span>(plt[i].split(<span class="string">&#x27;:&#x27;</span>)[<span class="number">1</span>]) <span class="comment">#split(&#x27;:&#x27;)[1]将键值对字符串分开,获得值部分  价格</span></span><br><span class="line">            title = <span class="built_in">eval</span>(title[i].split(<span class="string">&#x27;:&#x27;</span>)[<span class="number">1</span>])<span class="comment">#split(&#x27;:&#x27;)[1]将键值对字符串分开,获得值部分  商品名称</span></span><br><span class="line">            ilt.append([price,title])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;网页解析失败&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printGoodlist</span>(<span class="params">ilt</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        tplt = <span class="string">&quot;&#123;:4&#125;\t&#123;:8&#125;\t&#123;:16&#125;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(tplt.<span class="built_in">format</span>(<span class="string">&quot;序号&quot;</span>,<span class="string">&quot;价格&quot;</span>,<span class="string">&quot;商品名称&quot;</span>))</span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> g <span class="keyword">in</span> ilt:</span><br><span class="line">            count=count+<span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(tplt.<span class="built_in">format</span>(count,g[<span class="number">0</span>]),g[<span class="number">1</span>])  <span class="comment">#count 为序号,g[0]为商品价格,g[1]商品名称</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;输出失败&quot;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main1</span>():</span><br><span class="line">    goods =<span class="string">&quot;书包&quot;</span></span><br><span class="line">    depth = <span class="number">2</span></span><br><span class="line">    start_url = <span class="string">&#x27;https://s.taobao.com/search?q=&#x27;</span>+goods</span><br><span class="line">    infoList = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(depth):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            url = start_url+<span class="string">&quot;&amp;s=&quot;</span>+<span class="built_in">str</span>(<span class="number">44</span>*i)</span><br><span class="line">            html = getHTMLtext(url)</span><br><span class="line">            prasePage(infoList,html)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    printGoodlist(infoList)</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例–股票信息定向爬取"><a href="#实例–股票信息定向爬取" class="headerlink" title="实例–股票信息定向爬取"></a>实例–股票信息定向爬取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">GetHTMltext</span>(<span class="params">url,code = <span class="string">&#x27;utf-8&#x27;</span></span>):   <span class="comment">#网站发生变动 待更新</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        kv = &#123;<span class="string">&quot;user-agent&quot;</span>:<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.0.0&quot;</span>,</span><br><span class="line">              <span class="string">&quot;cookie&quot;</span>:<span class="string">&quot;qgqp_b_id=1fa9098b5972ea7e3036dbdc3ff568a6; st_si=45750356129814; st_asi=delete; td_cookie=802729162; HAList=ty-1-600588-%u7528%u53CB%u7F51%u7EDC; st_pvi=40869652126604; st_sp=2023-08-25%2015%3A45%3A59; st_inirUrl=https%3A%2F%2Fcn.bing.com%2F; st_sn=4; st_psi=20230825161637105-113200301321-4929148757&quot;</span>&#125;</span><br><span class="line">        r = requests.get(url,headers=kv,timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()  <span class="comment"># 如果不是200则引发httpError异常</span></span><br><span class="line">        r.encoding = code</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;获取页面失败&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getstockList</span>(<span class="params">lst,stockURl</span>):</span><br><span class="line">    html = GetHTMltext(stockURl,<span class="string">&#x27;GB2312&#x27;</span>)</span><br><span class="line">    soup = BeautifulSoup(html,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    a =  soup.find_all(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            href = i.attrs[<span class="string">&#x27;href&#x27;</span>]  <span class="comment">#获得href属性的对应值：&quot;https://hq.gucheng.com/SZ000001/&quot;</span></span><br><span class="line">            lst.append(re.findall(<span class="string">r&#x27;[s][hz]\d&#123;6&#125;&#x27;</span>,href)[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getstockInfo</span>(<span class="params">lst,stockURl,fpath</span>):</span><br><span class="line">    <span class="comment"># 使用lst中的股票号码与stockURL组合，得到对应股票信息的URL链接，并将其内容存入fpath指定的路径内</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> stock <span class="keyword">in</span> lst:</span><br><span class="line">        url = stockURl+stock+<span class="string">&quot;.html&quot;</span></span><br><span class="line">        html = GetHTMltext(url)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> html ==<span class="string">&quot; &quot;</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            infoDict = &#123;&#125;    <span class="comment">#定义一个字典存储股票信息</span></span><br><span class="line">            soup = BeautifulSoup(html, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">            stockInfo = soup.find(<span class="string">&#x27;div&#x27;</span>,attrs=&#123;<span class="string">&#x27;class&#x27;</span>:<span class="string">&#x27;stock_top clearfix&#x27;</span>&#125;)  <span class="comment">#返回name=div且attrs=&#123;&#x27;class&#x27;:&#x27;stock_top clearfix&#x27;&#125;的Tag对象</span></span><br><span class="line">            name = soup.find(<span class="string">&#x27;h1&#x27;</span>).string.strip()  <span class="comment">#找到name=h1的标签并得到它的string部分，跳过空格</span></span><br><span class="line">            infoDict.update(&#123;<span class="string">&quot;股票名称&quot;</span>:name.split()[<span class="number">0</span>]&#125;)  <span class="comment">#update函数对两个字典进行合并，将字典&#123;&#x27;股票名称&#x27;:name&#125;合并进字典infoDict内</span></span><br><span class="line">            Keylist = stockInfo.find_all(<span class="string">&#x27;dt&#x27;</span>)  <span class="comment">#找到div标签内所有的dt标签，以列表形式返回</span></span><br><span class="line">            valuelist = stockInfo.find_all(<span class="string">&#x27;dd&#x27;</span>)   <span class="comment">#找到div标签内所有的dd标签，以列表形式返回</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Keylist)):</span><br><span class="line">                key = Keylist[i].string   <span class="comment">#获取dt标签的string属性</span></span><br><span class="line">                val = valuelist[i].string   <span class="comment">#获取dd标签的string属性</span></span><br><span class="line">                infoDict[key] = val  <span class="comment">#字典可以直接使用infoDict[key] = val，向其中增添内容</span></span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(fpath,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    f.write(<span class="built_in">str</span>(infoDict)+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                    count = count+<span class="number">1</span></span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;\r当前速度:&#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(count*<span class="number">100</span>/<span class="built_in">len</span>(lst)),end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            count = count + <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;\r当前速度:&#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(count * <span class="number">100</span> / <span class="built_in">len</span>(lst)), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            traceback.print_exc()</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main2</span>():</span><br><span class="line">    stock_list_url = <span class="string">&#x27;https://quote.eastmoney.com/stocklist.html&#x27;</span></span><br><span class="line">    stock_info_url = <span class="string">&#x27;https://xueqiu.com/S/BIDU&#x27;</span></span><br><span class="line">    output_file  = <span class="string">&#x27;D://BaiduGupiao.txt&#x27;</span></span><br><span class="line">    slist = []</span><br><span class="line">    getstockList(slist,stock_list_url)</span><br><span class="line">    getstockInfo(slist,stock_info_url,output_file)</span><br></pre></td></tr></table></figure>
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/71d3.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">机器学习算法</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://img2.imgtp.com/2024/01/25/uyAFRUZN.png" class="soft-size--round soft-style--box" alt="Ty Leo">
+    
+    
+      <h2>Ty Leo</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>15</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        1
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        5
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">IP查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%88%AC%E5%8F%96"><span class="toc-number">2.</span> <span class="toc-text">图片爬取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6%E5%85%B3%E9%94%AE%E5%AD%97%E6%90%9C%E7%B4%A2"><span class="toc-number">3.</span> <span class="toc-text">百度关键字搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML%E9%A1%B5%E9%9D%A2%E8%8E%B7%E5%8F%96"><span class="toc-number">4.</span> <span class="toc-text">HTML页面获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Ebs4%E5%BA%93%E7%9A%84HTML%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">基于bs4库的HTML应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E2%80%93%E8%8E%B7%E5%8F%96%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E6%8E%92%E5%90%8D"><span class="toc-number">6.</span> <span class="toc-text">实例–获取中国大学排名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E2%80%93%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF%E5%AE%9A%E5%90%91%E7%88%AC%E5%8F%96"><span class="toc-number">7.</span> <span class="toc-text">实例–淘宝商品信息定向爬取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E2%80%93%E8%82%A1%E7%A5%A8%E4%BF%A1%E6%81%AF%E5%AE%9A%E5%90%91%E7%88%AC%E5%8F%96"><span class="toc-number">8.</span> <span class="toc-text">实例–股票信息定向爬取</span></a></li></ol>
+  </div>
+</section>
+
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            学习笔记 (13)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Python/" style="font-size: 15px;" class="tags-cloud-5">Python</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 15px;" class="tags-cloud-5">前端</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;" class="tags-cloud-0">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;" class="tags-cloud-10">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;" class="tags-cloud-0">机器学习</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/chenthesky" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">Ty Leo</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css"> 
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</div>
+
+
+
+</body>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
+</html>

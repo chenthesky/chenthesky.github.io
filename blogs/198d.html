@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="Ty Leo">
+  
+
+  
+
+  
+
+  <title>CSS | Ty Leo&#39;s BLOG</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Ty Leo&#39;s BLOG
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">CSS</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ty Leo</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-02-23T08:46:02.268Z" itemprop="datePublished">2024-02-23</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2024-02-25T12:06:25.845Z" itemprop="dateUpdated">2024-02-25</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">📒 学习笔记</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/%E5%89%8D%E7%AB%AF/">🏷️ 前端</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <p><strong>CSS主要由两个主要的部分组成 选择器以及一条或多条的样式</strong></p>
+<h2 id="CSS引入方式"><a href="#CSS引入方式" class="headerlink" title="CSS引入方式"></a>CSS引入方式</h2><p>内部引入：直接给标签添加style属性 （麻烦）</p>
+<p>多个文件用外部样式<br><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231031203836.png" alt=" "></p>
+<h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><ul>
+<li><p>全局选择器：*{}</p>
+</li>
+<li><p>元素选择器：标签{}</p>
+</li>
+<li><p>class类选择器 :标签中加class属性  head-style中以 **(.class属性名{})**访问</p>
+</li>
+<li><p>class选择器的特点<br><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231031211939.png" alt=" "></p>
+</li>
+<li><p>id选择器：标签中加id属性  head-style中以 （#id属性名{}）访问<br><em><strong>注：id名称是唯一的，不可重复，id不能以数字开头</strong></em></p>
+</li>
+</ul>
+<h3 id="合并选择器"><a href="#合并选择器" class="headerlink" title="合并选择器"></a>合并选择器</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231031213554.png" alt=" "></p>
+<h3 id="选择器的优先级"><a href="#选择器的优先级" class="headerlink" title="选择器的优先级"></a>选择器的优先级</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231031213645.png" alt=" "></p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p>加粗 <code>font-weight: 700;</code>  斜体：<code>font-style: italic;</code> (正常是normal)<br>指定一个元素的字体：<code>font-family: &quot;Simsun&quot;;</code></p>
+<h2 id="背景属性"><a href="#背景属性" class="headerlink" title="背景属性"></a>背景属性</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101192053.png" alt=" "></p>
+<h3 id="背景颜色"><a href="#背景颜色" class="headerlink" title="背景颜色"></a>背景颜色</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">400px</span>;    </span><br><span class="line"><span class="attribute">background-color</span>: blue;</span><br></pre></td></tr></table></figure>
+
+<h3 id="背景图片"><a href="#背景图片" class="headerlink" title="背景图片"></a>背景图片</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">400px</span>;    </span><br><span class="line"><span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&quot;古风.png&quot;</span>); #“ ”中为图片路径   </span><br></pre></td></tr></table></figure>
+
+<h3 id="设置图片重复"><a href="#设置图片重复" class="headerlink" title="设置图片重复"></a>设置图片重复</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101193601.png" alt=" "></p>
+<h3 id="设置图片大小"><a href="#设置图片大小" class="headerlink" title="设置图片大小"></a>设置图片大小</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101194429.png" alt=" "></p>
+<h3 id="设置图片位置"><a href="#设置图片位置" class="headerlink" title="设置图片位置"></a>设置图片位置</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101194759.png" alt=" "></p>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101195131.png" alt=" "></p>
+<p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101195150.png" alt=" "></p>
+<p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101195440.png" alt=" "></p>
+<p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231101195923.png" alt=" "></p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><h3 id="表格边框"><a href="#表格边框" class="headerlink" title="表格边框"></a>表格边框</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1</span> solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="折叠边框"><a href="#折叠边框" class="headerlink" title="折叠边框"></a>折叠边框</h3><p><strong><code>border-collapse: collapse;</code></strong></p>
+<h3 id="表格大小"><a href="#表格大小" class="headerlink" title="表格大小"></a>表格大小</h3><p><strong>width height属性</strong></p>
+<h3 id="表格文字对齐"><a href="#表格文字对齐" class="headerlink" title="表格文字对齐"></a>表格文字对齐</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">text-align</span>:center;  <span class="comment">/*左右*/</span></span><br><span class="line"><span class="attribute">vertical-align</span>:top; <span class="comment">/*上下*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="表格填充"><a href="#表格填充" class="headerlink" title="表格填充"></a>表格填充</h3><p><strong><code>padding: 20px;</code></strong></p>
+<h3 id="表格背景颜色"><a href="#表格背景颜色" class="headerlink" title="表格背景颜色"></a>表格背景颜色</h3><p><strong><code>background-color: aqua;</code></strong></p>
+<h2 id="关系选择器"><a href="#关系选择器" class="headerlink" title="关系选择器"></a>关系选择器</h2><h3 id="后代选择器"><a href="#后代选择器" class="headerlink" title="后代选择器"></a>后代选择器</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102185354.png" alt=" "><br><strong>E标签下所有的F子代都会生效</strong></p>
+<h3 id="子代选择器"><a href="#子代选择器" class="headerlink" title="子代选择器"></a>子代选择器</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102185628.png" alt=" "></p>
+<h3 id="相邻兄弟选择器"><a href="#相邻兄弟选择器" class="headerlink" title="相邻兄弟选择器"></a>相邻兄弟选择器</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102185704.png" alt=" "><br><strong>只能向下选择</strong></p>
+<h3 id="通用兄弟选择器"><a href="#通用兄弟选择器" class="headerlink" title="通用兄弟选择器"></a>通用兄弟选择器</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102190003.png" alt=" "></p>
+<h2 id="盒子模型"><a href="#盒子模型" class="headerlink" title="盒子模型"></a>盒子模型</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102192731.png" alt=" "></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">160px</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: red;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">10px</span>;  <span class="comment">/*内边距：上下间距 左右间距*/</span></span><br><span class="line">	<span class="attribute">border</span>: <span class="number">5px</span> solid blue; <span class="comment">/*边距：边框粗细 线的类型(soli代表实线) 颜色*/</span></span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">30px</span>;  <span class="comment">/*外边距(透明) */</span></span><br><span class="line">	<span class="comment">/*margin,padding都可以独立设置上下左右的间距*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="弹性盒子模型"><a href="#弹性盒子模型" class="headerlink" title="弹性盒子模型"></a>弹性盒子模型</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102195805.png" alt=" "></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.continer</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">	<span class="attribute">background-color</span>: bisque;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flex-direction属性（方向）"><a href="#flex-direction属性（方向）" class="headerlink" title="flex-direction属性（方向）"></a>flex-direction属性（方向）</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102200421.png" alt=" "></p>
+<h3 id="flex-content属性（上下）"><a href="#flex-content属性（上下）" class="headerlink" title="flex-content属性（上下）"></a>flex-content属性（上下）</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102200636.png" alt=" "></p>
+<h3 id="align-items属性（左右）"><a href="#align-items属性（左右）" class="headerlink" title="align-items属性（左右）"></a>align-items属性（左右）</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102201015.png" alt=" "></p>
+<h3 id="子元素上的属性（按权重来分配）"><a href="#子元素上的属性（按权重来分配）" class="headerlink" title="子元素上的属性（按权重来分配）"></a>子元素上的属性（按权重来分配）</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231102201642.png" alt=" "></p>
+<h2 id="脱离文档流"><a href="#脱离文档流" class="headerlink" title="脱离文档流"></a>脱离文档流</h2><h3 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103144103.png" alt=" "></p>
+<blockquote>
+<p><strong>注：float应写在样式小的方格下 还要主义body内标签的顺序 并且党宽度不够时，会被挤压到下一行</strong></p>
+</blockquote>
+<p><strong>常用模型：将无序标签水平放置</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> <span class="selector-tag">li</span>&#123;</span><br><span class="line">	<span class="attribute">float</span>: left;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0</span> <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">li</span>&gt;标题<span class="number">1</span>&lt;/<span class="selector-tag">li</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">li</span>&gt;标题<span class="number">2</span>&lt;/<span class="selector-tag">li</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">li</span>&gt;标题<span class="number">3</span>&lt;/<span class="selector-tag">li</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">ul</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="浮动副作用"><a href="#浮动副作用" class="headerlink" title="浮动副作用"></a>浮动副作用</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103151541.png" alt=" "></p>
+<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103152225.png" alt=" "></p>
+<h3 id="父类设置高度"><a href="#父类设置高度" class="headerlink" title="父类设置高度"></a>父类设置高度</h3><h3 id="受影响元素增加clear属性：clear-both-left-right"><a href="#受影响元素增加clear属性：clear-both-left-right" class="headerlink" title="受影响元素增加clear属性：clear: both|left|right;"></a>受影响元素增加clear属性：<code>clear: both|left|right;</code></h3><h3 id="overflow清除浮动-在外面的盒子设置"><a href="#overflow清除浮动-在外面的盒子设置" class="headerlink" title="overflow清除浮动(在外面的盒子设置)"></a>overflow清除浮动(在外面的盒子设置)</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">overflow</span>: hidden;</span><br><span class="line"><span class="attribute">clear</span>: both;</span><br></pre></td></tr></table></figure>
+
+<h3 id="伪对象方式"><a href="#伪对象方式" class="headerlink" title="伪对象方式"></a>伪对象方式</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103153030.png" alt=" "></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.continer</span><span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">	<span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">	<span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p><strong>父级有定位，则根据父级容器的定位来移动，如果没定位，则根据文档来移动</strong><br><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103154303.png" alt=" "></p>
+<h3 id="相对定位"><a href="#相对定位" class="headerlink" title="相对定位"></a>相对定位</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">position</span>: relative;</span><br><span class="line"><span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line"><span class="attribute">left</span>: <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="绝对定位-可以脱离文档流（三层）"><a href="#绝对定位-可以脱离文档流（三层）" class="headerlink" title="绝对定位-可以脱离文档流（三层）"></a>绝对定位-可以脱离文档流（三层）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">position</span>: absolute;</span><br><span class="line"><span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line"><span class="attribute">left</span>: <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>随着页面滚动而滚动</strong></p>
+</blockquote>
+<h3 id="国定定位-可以脱离文档流-页面位置固定"><a href="#国定定位-可以脱离文档流-页面位置固定" class="headerlink" title="国定定位-可以脱离文档流-页面位置固定"></a>国定定位-可以脱离文档流-页面位置固定</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">position</span>: fixed;</span><br><span class="line"><span class="attribute">top</span>: <span class="number">20px</span>;</span><br><span class="line"><span class="attribute">left</span>: <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>随着页面滚动而不滚动 一般只有一个</strong></p>
+</blockquote>
+<h3 id="Z-index-决定谁覆盖谁"><a href="#Z-index-决定谁覆盖谁" class="headerlink" title="Z-index 决定谁覆盖谁"></a>Z-index 决定谁覆盖谁</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103160435.png" alt=" "></p>
+<h2 id="CSS新属性"><a href="#CSS新属性" class="headerlink" title="CSS新属性"></a>CSS新属性</h2><h3 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103160926.png" alt=" "></p>
+<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103161059.png" alt=" "></p>
+<h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103161834.png" alt=" "><br><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103161901.png" alt=" "></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">	<span class="selector-tag">div</span>&#123;</span><br><span class="line">		<span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">		<span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">		<span class="attribute">background-color</span>: red;</span><br><span class="line">		<span class="attribute">animation</span>: myDh <span class="number">3s</span> linear <span class="number">0s</span> infinite; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="selector-tag">div</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">		<span class="attribute">animation-play-state</span>: paused;  <span class="comment">/*鼠标悬停控制*/</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">@keyframes</span> myDh&#123;</span><br><span class="line">		<span class="number">0%</span>&#123;</span><br><span class="line">			<span class="comment">/*css样式*/</span></span><br><span class="line">			<span class="attribute">opacity</span>：<span class="number">0.2</span>； <span class="comment">/*透明度*/</span></span><br><span class="line">			<span class="attribute">background-color</span>: red;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="number">50%</span>&#123;</span><br><span class="line">			<span class="comment">/*css样式*/</span></span><br><span class="line">			<span class="attribute">opacity</span>：<span class="number">0.5</span>；</span><br><span class="line">			<span class="attribute">background-color</span>: green;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="number">100%</span>&#123;</span><br><span class="line">			 <span class="comment">/*css样式*/</span></span><br><span class="line">			 <span class="attribute">opacity</span>：<span class="number">0.5</span>；</span><br><span class="line">			 <span class="attribute">background-color</span>: red;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h2><p><strong>媒体查询会根据设备的大小自动识别加载不同的样式</strong><br><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103164137.png" alt=" "></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">	<span class="selector-tag">div</span>&#123;</span><br><span class="line">		<span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">		<span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">		<span class="attribute">background-color</span>: red;</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>:<span class="number">768px</span>)&#123;</span><br><span class="line">	<span class="comment">/*css样式*/</span></span><br><span class="line">	<span class="selector-tag">div</span>&#123;</span><br><span class="line">		<span class="attribute">background-color</span>: green;</span><br><span class="line">	&#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>:<span class="number">768px</span>) <span class="keyword">and</span> (<span class="attribute">max-width</span>:<span class="number">996px</span>)&#123;</span><br><span class="line">	<span class="comment">/*css样式*/</span></span><br><span class="line">	<span class="selector-tag">div</span>&#123;</span><br><span class="line">		<span class="attribute">background-color</span>: blue;</span><br><span class="line">	&#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">max-width</span>:<span class="number">996px</span>)&#123;</span><br><span class="line">	<span class="comment">/*css样式*/</span></span><br><span class="line">	<span class="selector-tag">div</span>&#123;</span><br><span class="line">		<span class="attribute">background-color</span>: red;</span><br><span class="line">	&#125;</span><br><span class="line">   &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="雪碧图"><a href="#雪碧图" class="headerlink" title="雪碧图"></a>雪碧图</h2><p><img src="http://s9at8ont6.hb-bkt.clouddn.com/Pasted%20image%2020231103164719.png" alt=" "><br><strong><code>display：block</code>; 内连元素变为块状元素</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">/古风.png</span>);</span><br><span class="line"><span class="attribute">background-position</span>: **px;</span><br></pre></td></tr></table></figure>
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/d562.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">HTML</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/3aa.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Java实现稀疏矩阵</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://img2.imgtp.com/2024/01/25/uyAFRUZN.png" class="soft-size--round soft-style--box" alt="Ty Leo">
+    
+    
+      <h2>Ty Leo</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>15</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        1
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        5
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">CSS引入方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">2.1.</span> <span class="toc-text">合并选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">2.2.</span> <span class="toc-text">选择器的优先级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">背景属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2"><span class="toc-number">4.1.</span> <span class="toc-text">背景颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="toc-number">4.2.</span> <span class="toc-text">背景图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BE%E7%89%87%E9%87%8D%E5%A4%8D"><span class="toc-number">4.3.</span> <span class="toc-text">设置图片重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BE%E7%89%87%E5%A4%A7%E5%B0%8F"><span class="toc-number">4.4.</span> <span class="toc-text">设置图片大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%9B%BE%E7%89%87%E4%BD%8D%E7%BD%AE"><span class="toc-number">4.5.</span> <span class="toc-text">设置图片位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC"><span class="toc-number">5.</span> <span class="toc-text">文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-number">6.</span> <span class="toc-text">表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E8%BE%B9%E6%A1%86"><span class="toc-number">6.1.</span> <span class="toc-text">表格边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%98%E5%8F%A0%E8%BE%B9%E6%A1%86"><span class="toc-number">6.2.</span> <span class="toc-text">折叠边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E5%A4%A7%E5%B0%8F"><span class="toc-number">6.3.</span> <span class="toc-text">表格大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E6%96%87%E5%AD%97%E5%AF%B9%E9%BD%90"><span class="toc-number">6.4.</span> <span class="toc-text">表格文字对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E5%A1%AB%E5%85%85"><span class="toc-number">6.5.</span> <span class="toc-text">表格填充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2"><span class="toc-number">6.6.</span> <span class="toc-text">表格背景颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">关系选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">7.1.</span> <span class="toc-text">后代选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">7.2.</span> <span class="toc-text">子代选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E9%82%BB%E5%85%84%E5%BC%9F%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">7.3.</span> <span class="toc-text">相邻兄弟选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%85%84%E5%BC%9F%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">7.4.</span> <span class="toc-text">通用兄弟选择器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">8.</span> <span class="toc-text">盒子模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%B9%E6%80%A7%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">9.</span> <span class="toc-text">弹性盒子模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flex-direction%E5%B1%9E%E6%80%A7%EF%BC%88%E6%96%B9%E5%90%91%EF%BC%89"><span class="toc-number">9.1.</span> <span class="toc-text">flex-direction属性（方向）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flex-content%E5%B1%9E%E6%80%A7%EF%BC%88%E4%B8%8A%E4%B8%8B%EF%BC%89"><span class="toc-number">9.2.</span> <span class="toc-text">flex-content属性（上下）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#align-items%E5%B1%9E%E6%80%A7%EF%BC%88%E5%B7%A6%E5%8F%B3%EF%BC%89"><span class="toc-number">9.3.</span> <span class="toc-text">align-items属性（左右）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%85%83%E7%B4%A0%E4%B8%8A%E7%9A%84%E5%B1%9E%E6%80%A7%EF%BC%88%E6%8C%89%E6%9D%83%E9%87%8D%E6%9D%A5%E5%88%86%E9%85%8D%EF%BC%89"><span class="toc-number">9.4.</span> <span class="toc-text">子元素上的属性（按权重来分配）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81"><span class="toc-number">10.</span> <span class="toc-text">脱离文档流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E5%8A%A8"><span class="toc-number">10.1.</span> <span class="toc-text">浮动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E5%8A%A8%E5%89%AF%E4%BD%9C%E7%94%A8"><span class="toc-number">10.2.</span> <span class="toc-text">浮动副作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8"><span class="toc-number">11.</span> <span class="toc-text">清除浮动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%B6%E7%B1%BB%E8%AE%BE%E7%BD%AE%E9%AB%98%E5%BA%A6"><span class="toc-number">11.1.</span> <span class="toc-text">父类设置高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%97%E5%BD%B1%E5%93%8D%E5%85%83%E7%B4%A0%E5%A2%9E%E5%8A%A0clear%E5%B1%9E%E6%80%A7%EF%BC%9Aclear-both-left-right"><span class="toc-number">11.2.</span> <span class="toc-text">受影响元素增加clear属性：clear: both|left|right;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overflow%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8-%E5%9C%A8%E5%A4%96%E9%9D%A2%E7%9A%84%E7%9B%92%E5%AD%90%E8%AE%BE%E7%BD%AE"><span class="toc-number">11.3.</span> <span class="toc-text">overflow清除浮动(在外面的盒子设置)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E5%AF%B9%E8%B1%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">11.4.</span> <span class="toc-text">伪对象方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D"><span class="toc-number">12.</span> <span class="toc-text">定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%AF%B9%E5%AE%9A%E4%BD%8D"><span class="toc-number">12.1.</span> <span class="toc-text">相对定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D-%E5%8F%AF%E4%BB%A5%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81%EF%BC%88%E4%B8%89%E5%B1%82%EF%BC%89"><span class="toc-number">12.2.</span> <span class="toc-text">绝对定位-可以脱离文档流（三层）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E5%AE%9A%E5%AE%9A%E4%BD%8D-%E5%8F%AF%E4%BB%A5%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81-%E9%A1%B5%E9%9D%A2%E4%BD%8D%E7%BD%AE%E5%9B%BA%E5%AE%9A"><span class="toc-number">12.3.</span> <span class="toc-text">国定定位-可以脱离文档流-页面位置固定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Z-index-%E5%86%B3%E5%AE%9A%E8%B0%81%E8%A6%86%E7%9B%96%E8%B0%81"><span class="toc-number">12.4.</span> <span class="toc-text">Z-index 决定谁覆盖谁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS%E6%96%B0%E5%B1%9E%E6%80%A7"><span class="toc-number">13.</span> <span class="toc-text">CSS新属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%86%E8%A7%92"><span class="toc-number">13.1.</span> <span class="toc-text">圆角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B4%E5%BD%B1"><span class="toc-number">13.2.</span> <span class="toc-text">阴影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E7%94%BB"><span class="toc-number">13.3.</span> <span class="toc-text">动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="toc-number">14.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%AA%E7%A2%A7%E5%9B%BE"><span class="toc-number">15.</span> <span class="toc-text">雪碧图</span></a></li></ol>
+  </div>
+</section>
+
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            学习笔记 (13)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Python/" style="font-size: 15px;" class="tags-cloud-5">Python</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 15px;" class="tags-cloud-5">前端</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;" class="tags-cloud-0">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;" class="tags-cloud-10">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;" class="tags-cloud-0">机器学习</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/chenthesky" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">Ty Leo</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css"> 
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</div>
+
+
+
+</body>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
+</html>
