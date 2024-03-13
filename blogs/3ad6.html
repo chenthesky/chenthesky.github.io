@@ -29,7 +29,7 @@
 
   
 
-  <title>Markdown使用方法 | Ty Leo&#39;s BLOG</title>
+  <title>Centos7 中安装最新版 maven 3.9.6 | Ty Leo&#39;s BLOG</title>
 
   
 
@@ -53,7 +53,7 @@
 <!-- header container -->
 <header class="header-container post" id="pjax-container">
   
-    <div class="post-image" style="background-image: url(https://pic1.zhimg.com/70/v2-6122509b3df9a514504b6bce665dfee8_1440w.awebp?source=172ae18b&amp;biz_tag=Post)"></div>
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
   
 
   <!-- navbar -->
@@ -106,22 +106,20 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">Markdown使用方法</h1>
+          <h1 class="title-wrap">Centos7 中安装最新版 maven 3.9.6</h1>
           <h2 class="title-sub-wrap">
             <strong>Ty Leo</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-25T02:30:42.444Z" itemprop="datePublished">2024-01-25</time>
+            <time  class="article-date" datetime="2024-03-09T01:35:36.184Z" itemprop="datePublished">2024-03-09</time>
           </h2>
           
             <h2 class="last-time">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-29T11:42:09.770Z" itemprop="dateUpdated">2024-02-29</time>
+              <time  class="article-updated" datetime="2024-03-13T13:17:18.443Z" itemprop="dateUpdated">2024-03-13</time>
             </h2>
           
           
           <ul class="wrap-list dark">
-  
-    <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">📒 学习笔记</a></li>
   
 </ul>
           <ul class="wrap-list dark">
@@ -148,77 +146,54 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 标题</span></span><br></pre></td></tr></table></figure>
-<h3 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">### 二级标题</span></span><br></pre></td></tr></table></figure>
-<h4 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">#### 三级标题</span></span><br></pre></td></tr></table></figure>
-<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p><strong>加粗</strong></p>
-<p><em>斜体</em></p>
-<p><em><strong>加粗并斜体</strong></em></p>
-<p><del>删除线</del></p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**加粗**</span></span><br><span class="line"></span><br><span class="line"><span class="emphasis">*斜体*</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**<span class="emphasis">*加粗并斜体*</span>**</span></span><br><span class="line"></span><br><span class="line">~删除线~</span><br></pre></td></tr></table></figure>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于yum安装的版本有点低，很多项目无法打包，因此需要手动安装最新版</p>
+<h2 id="查看是否有maven"><a href="#查看是否有maven" class="headerlink" title="查看是否有maven"></a>查看是否有maven</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn --version</span><br></pre></td></tr></table></figure>
 
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><blockquote>
-<p>这里是引用</p>
-</blockquote>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 这里是引用</span></span><br></pre></td></tr></table></figure>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><hr>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**<span class="emphasis">*</span></span></span><br></pre></td></tr></table></figure>
+<p>如果有，则移除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove maven</span><br></pre></td></tr></table></figure>
 
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><img src="https://img2.imgtp.com/2024/01/28/00zee3Ys.png" alt="外链图片" style="zoom:50%;" />
+<h2 id="下载最新版maven"><a href="#下载最新版maven" class="headerlink" title="下载最新版maven"></a>下载最新版maven</h2><p>此处我下载的3.9.6版本 自己按需下载即可 [maven官方下载](<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">Maven – Download Apache Maven</a>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz</span><br></pre></td></tr></table></figure>
 
-<img src="https://img2.imgtp.com/2024/02/29/EdfGSlkS.png" alt="外链图片" style="zoom:25%;" />
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://img2.imgtp.com/2024/01/28/00zee3Ys.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;外链图片&quot;</span> <span class="attr">style</span>=<span class="string">&quot;zoom:50%;&quot;</span> /&gt;</span></span> </span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://img2.imgtp.com/2024/02/29/EdfGSlkS.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;外链图片&quot;</span> <span class="attr">style</span>=<span class="string">&quot;zoom:25%;&quot;</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="创建一个安装maven目录"><a href="#创建一个安装maven目录" class="headerlink" title="创建一个安装maven目录"></a>创建一个安装maven目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/local/maven</span><br></pre></td></tr></table></figure>
 
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/markdown/md-tutorial.html">Markdown</a>菜鸟上关于Markdown的教程</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Markdown</span>](<span class="link">https://www.runoob.com/markdown/md-tutorial.html</span>)菜鸟上关于Markdown的教程</span><br></pre></td></tr></table></figure>
+<h2 id="解压软件包"><a href="#解压软件包" class="headerlink" title="解压软件包"></a>解压软件包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-maven-3.9.6-bin.tar.gz -C /usr/local/maven/</span><br></pre></td></tr></table></figure>
 
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ol>
-<li>A</li>
-<li>B</li>
-<li>C</li>
-</ol>
-<ul>
-<li>A</li>
-<li>B</li>
-<li>C<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> A</span><br><span class="line"><span class="bullet">2.</span> B</span><br><span class="line"><span class="bullet">3.</span> C</span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> A</span><br><span class="line"><span class="bullet">*</span> B</span><br><span class="line"><span class="bullet">*</span> C</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><table>
-<thead>
-<tr>
-<th>姓名</th>
-<th>年龄</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>张三</td>
-<td>18</td>
-</tr>
-</tbody></table>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| 姓名 | 年龄 |</span><br><span class="line">| ---- | ---- |</span><br><span class="line">| 张三 | 18   |</span><br></pre></td></tr></table></figure>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>先打开profile配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
 
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello,world!\n&quot;</span>)；</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将下面的配置放到 profile 最下面，如果有其他配置，做适当修改。</p>
+<p><strong>注意：一定是仅将以下的三行配置放到profile配置文件中，否则会导致linux无法启动！（别问我为什么知道的。。。。）</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MAVEN_HOME=/usr/local/maven/apache-maven-3.9.6</span><br><span class="line">PATH=$PATH:$MAVEN_HOME/bin:</span><br><span class="line">export MAVEN_HOME</span><br></pre></td></tr></table></figure>
+
+<p>然后使配置文件生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看新安装maven版本"><a href="#查看新安装maven版本" class="headerlink" title="查看新安装maven版本"></a>查看新安装maven版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn --version</span><br></pre></td></tr></table></figure>
+
+<p>如果你看到以下内容 则说明安装成功！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-03-09%20093112.png" alt="maven"></p>
+
       </section>
 
       
       
         <nav class="article-nav">
           
+          
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
-      <div class="card-cover" background-image-lazy data-img="https://img2.imgtp.com/2024/02/14/YOwaZ4B0.jpg"></div>
-    
     <div class="card-text">
       
-        <a href="/blogs/ed31.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">Flexblock添加Aplayer全盘吸底音乐播放器</h2>
+        <a href="/blogs/437d.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">爬虫</h2>
         </a>
       
-      <div class="card-text--row">Newer</div>
+      <div class="card-text--row">Older</div>
     </div>
   </article>
 </div>
-          
           
         </nav>
       
@@ -274,7 +249,7 @@
     <span>TOC</span>
   </div>
   <div class="widget-body">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">标题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E6%A0%87%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">分割线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">超链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-number">8.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">9.</span> <span class="toc-text">代码</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%98%AF%E5%90%A6%E6%9C%89maven"><span class="toc-number">2.</span> <span class="toc-text">查看是否有maven</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%89%88maven"><span class="toc-number">3.</span> <span class="toc-text">下载最新版maven</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AE%89%E8%A3%85maven%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">创建一个安装maven目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-number">5.</span> <span class="toc-text">解压软件包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">配置环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%B0%E5%AE%89%E8%A3%85maven%E7%89%88%E6%9C%AC"><span class="toc-number">7.</span> <span class="toc-text">查看新安装maven版本</span></a></li></ol>
   </div>
 </section>
 
