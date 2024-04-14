@@ -29,7 +29,7 @@
 
   
 
-  <title>Java实现稀疏矩阵 | Ty Leo&#39;s BLOG</title>
+  <title>linux下mysql5.7密码重置 | Ty Leo&#39;s BLOG</title>
 
   
 
@@ -106,22 +106,15 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">Java实现稀疏矩阵</h1>
+          <h1 class="title-wrap">linux下mysql5.7密码重置</h1>
           <h2 class="title-sub-wrap">
             <strong>Ty Leo</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-02-23T06:54:26.613Z" itemprop="datePublished">2024-02-23</time>
+            <time  class="article-date" datetime="2024-04-11T13:36:46.578Z" itemprop="datePublished">2024-04-11</time>
           </h2>
-          
-            <h2 class="last-time">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-27T08:08:48.076Z" itemprop="dateUpdated">2024-02-27</time>
-            </h2>
           
           
           <ul class="wrap-list dark">
-  
-    <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">📒 学习笔记</a></li>
   
 </ul>
           <ul class="wrap-list dark">
@@ -148,7 +141,20 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.Chen.study01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedHashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Blue_wool</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 11.012</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">study1</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span>[][] array1 = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">11</span>][<span class="number">11</span>];</span><br><span class="line">        array1[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">        array1[<span class="number">2</span>][<span class="number">3</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出原始的数组</span></span><br><span class="line">        System.out.println(<span class="string">&quot;原始的数组为：&quot;</span>);</span><br><span class="line">        out_put(array1);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//获取有效值的个数</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j] != <span class="number">0</span>)</span><br><span class="line">                    sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;有效值的个数为：&quot;</span>+sum);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建稀疏数组</span></span><br><span class="line">        <span class="type">int</span>[][] array2 = <span class="keyword">new</span> <span class="title class_">int</span>[sum+<span class="number">1</span>][<span class="number">3</span>];</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">2</span>] = sum;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//遍历二维数组</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1[i].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j]!=<span class="number">0</span>)&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                    array2[count][<span class="number">0</span>] = i;</span><br><span class="line">                    array2[count][<span class="number">1</span>] = j;</span><br><span class="line">                    array2[count][<span class="number">2</span>] = array1[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;稀疏数组为：&quot;</span>);</span><br><span class="line">        out_put(array2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//还原原数组</span></span><br><span class="line">        <span class="type">int</span>[][] array3 = <span class="keyword">new</span> <span class="title class_">int</span>[array2[<span class="number">0</span>][<span class="number">1</span>]][array2[<span class="number">0</span>][<span class="number">1</span>]];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; array2.length; i++) &#123;</span><br><span class="line">            array3[array2[i][<span class="number">0</span>]][array2[i][<span class="number">1</span>]]=array2[i][<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;还原的数组为：&quot;</span>);</span><br><span class="line">        out_put(array3);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">out_put</span><span class="params">(<span class="type">int</span>[][] args)</span>&#123;  <span class="comment">//定义一个输出方法</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] ints : args) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ints1 : ints) &#123;</span><br><span class="line">                System.out.print(ints1+<span class="string">&quot;\t&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <p>刚下了一个mysql，没注意随机生成的初始密码，所以进行密码重置。</p>
+<p><strong>编辑my.cnf文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后在[mysqld]下加上 <code>skip-grant-tables</code>，（注意：一定是在[mysqld]下加入）如：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">socket		= /tmp/mysql.sock</span><br><span class="line">datadir = /www/server/data</span><br><span class="line">skip-grant-tables</span><br></pre></td></tr></table></figure>
+
+<p><strong>重启mysql</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld restart </span><br></pre></td></tr></table></figure>
+
+<p><strong>登录mysql然后进行密码修改</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">登录mysql</span></span><br><span class="line">mysql -u root</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">密码修改</span></span><br><span class="line">update mysql.user set authentication_string=PASSWORD(&#x27;123456&#x27;) where User=&#x27;root&#x27;; </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">使修改生效</span></span><br><span class="line">flush privileges; </span><br></pre></td></tr></table></figure>
+
+<p><strong>然后再回到my.cnf文件，删掉[mysqld]下加上 <code>skip-grant-tables</code>并重启mysql。</strong></p>
 
       </section>
 
@@ -161,8 +167,8 @@
     
     <div class="card-text">
       
-        <a href="/blogs/198d.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">CSS</h2>
+        <a href="/blogs/3211.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Hadoop3.3.4--Linux编译安装</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -176,8 +182,8 @@
     
     <div class="card-text">
       
-        <a href="/blogs/3705.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">JavaSE</h2>
+        <a href="/blogs/480d.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux基础</h2>
         </a>
       
       <div class="card-text--row">Older</div>
