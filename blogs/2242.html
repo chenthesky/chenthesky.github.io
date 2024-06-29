@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="Ty Leo">
+  
+
+  
+
+  
+
+  <title>CNN卷积神经网络的MINIST手写体识别 | Ty Leo&#39;s BLOG</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Ty Leo&#39;s BLOG
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">CNN卷积神经网络的MINIST手写体识别</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ty Leo</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-06-29T13:49:01.836Z" itemprop="datePublished">2024-06-29</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/%E6%95%99%E7%A8%8B/">📒 教程</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <p>无意间接触到利用卷积神经网络来进行手写体识别，觉得好玩便尝试一下</p>
+<p>版本：<strong>python 3.8  Tensorflow 2.9</strong></p>
+<h3 id="安装Tensorflow"><a href="#安装Tensorflow" class="headerlink" title="安装Tensorflow"></a>安装Tensorflow</h3><p>首先我们需要安装Tensorflow,我这里是在anaconda中新建了一个虚拟环境，名叫tensorflow(另外说一句anaconda简直是太好用了！)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --name tensorflow python=3.8</span><br></pre></td></tr></table></figure>
+
+<p>安装完之后，默认在tensorflow虚拟环境里面，如果不在，在<strong>anaconda的shell</strong>中 输入<code>activate tensorflow</code> 进入tensorflow环境</p>
+<p>现在，我们来安装tensorflow</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorflow==2.9 -i https://pypi.doubanio.com/simple/</span><br></pre></td></tr></table></figure>
+
+<p>这里我是安装的2.9版本，大家可以自行选择。</p>
+<p>然后安装 tensorflow 所需要的包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas matplotlib notebook -i https://pypi.doubanio.com/simple/</span><br></pre></td></tr></table></figure>
+
+<p>这里也是根据自己的选择来安装</p>
+<h3 id="MINIST数据集"><a href="#MINIST数据集" class="headerlink" title="MINIST数据集"></a>MINIST数据集</h3><p>我们都知道，要训练一个模型，需要数据集的支持，而tensorflow提供了MINIST数据集，分为数据集和测试集。</p>
+<p><strong>训练集:</strong> 有6万张图片,每张图片大小28x28,同时有对应数量的标签(就是每张图片对应的数字)</p>
+<p><strong>测试集:</strong> 与训练集相比,其他一样，就是图片只有1万张</p>
+<p>我们可以看看测试集的大小与部分图片 (注意 这里必须安装matplotlib库)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 导入数据集</span></span><br><span class="line">mnist = tf.keras.datasets.mnist</span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练集样本及标签&quot;</span>, train_images.shape, train_labels.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;测试集样本及标签&quot;</span>, test_images.shape, test_labels.shape)</span><br><span class="line">train_images, test_images = train_images / <span class="number">255.0</span>, test_images / <span class="number">255.0</span>  <span class="comment"># 归一化,不然梯度爆炸</span></span><br><span class="line"><span class="comment"># 进行绘画</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">15</span>):</span><br><span class="line">    plt.subplot(<span class="number">3</span>, <span class="number">5</span>, i + <span class="number">1</span>)</span><br><span class="line">    plt.xticks([])</span><br><span class="line">    plt.yticks([])</span><br><span class="line">    plt.grid(<span class="literal">False</span>)</span><br><span class="line">    plt.imshow(test_images[i])</span><br><span class="line">    plt.xlabel(test_labels[i])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>差不多是下面这个样子 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/fb2b0e2df04e493988a7791ca058622c.jpeg" alt="MINIST数据集"></p>
+<h3 id="训练CNN卷积神经网络"><a href="#训练CNN卷积神经网络" class="headerlink" title="训练CNN卷积神经网络"></a>训练CNN卷积神经网络</h3><p>以下是对代码所定义的神经网络模型的讲解（虽然不是我写的）</p>
+<ol>
+<li>第一层为卷积层,32卷积核(即32输出通道),卷积核大小5x5,激活函数Relu,零值等大填充</li>
+<li>第二层为池化层，2x2最大值池化</li>
+<li>第三层为卷积层，卷积核大小5x5，64个输出通道</li>
+<li>第四层为池化层，仍为2x2最大池化</li>
+<li>第五层为扁平化层，将输入的二维张量拉成一维，便于输入给全连接层</li>
+<li>第六层为全连接层，与书上不同，这里是64个神经元(因为我的电脑内存不大)</li>
+<li>第七层为Dropout层，随机丢掉一些全连接层的神经元，以避免过拟合</li>
+<li>第八层，即最后一层，为输出层，输出独热编码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"> </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">当前版本:python-3.8,tensorflow-2.9</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 导入数据集</span></span><br><span class="line">mnist = tf.keras.datasets.mnist</span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练集样本及标签&quot;</span>, train_images.shape, train_labels.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;测试集样本及标签&quot;</span>, test_images.shape, test_labels.shape)</span><br><span class="line">train_images, test_images = train_images / <span class="number">255.0</span>, test_images / <span class="number">255.0</span>  <span class="comment"># 归一化,不然梯度爆炸</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 建立各层神经网络</span></span><br><span class="line">model = tf.keras.models.Sequential()  <span class="comment"># 建立一个堆叠层的神经网络</span></span><br><span class="line"><span class="comment"># 第一卷积层,32卷积核(即32输出通道),卷积核大小5x5,使用Relu激活函数,零值等大填充,输入张量形状28x28,色彩通道为1(即黑白图片)</span></span><br><span class="line">model.add(tf.keras.layers.Conv2D(<span class="number">32</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>, padding=<span class="string">&#x27;same&#x27;</span>, input_shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="comment"># 2x2的最大值池化</span></span><br><span class="line">model.add(tf.keras.layers.MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line"><span class="comment"># 第二卷积层,64个输出通道，输入通道这里就不用指定，可以自动承接前一层的</span></span><br><span class="line">model.add(tf.keras.layers.Conv2D(<span class="number">64</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>, padding=<span class="string">&#x27;same&#x27;</span>))</span><br><span class="line">model.add(tf.keras.layers.MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line"><span class="comment"># 扁平化,将二维的张量变成一维,这里28x28经过两次2x2池化,已是7x7大小,现在变成49</span></span><br><span class="line">model.add(tf.keras.layers.Flatten())</span><br><span class="line"><span class="comment"># 全连接层,64个神经元</span></span><br><span class="line">model.add(tf.keras.layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line"><span class="comment"># dropout层，损失函数0.5</span></span><br><span class="line">model.add(tf.keras.layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line"><span class="comment"># Readout层，输出独热编码</span></span><br><span class="line">model.add(tf.keras.layers.Dense(<span class="number">10</span>))  <span class="comment"># 最后输出10个数</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 编译模型</span></span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,  <span class="comment"># Adam优化器</span></span><br><span class="line">              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=<span class="literal">True</span>),  <span class="comment"># 损失函数</span></span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])  <span class="comment"># 监控指标:精度</span></span><br><span class="line"><span class="comment"># 开始训练,训练周期8,即将所有训练样本(6万个),遍历八遍,因为输入通道是32个,所以每遍训练1875次,每次32个</span></span><br><span class="line">model.fit(train_images, train_labels, epochs=<span class="number">8</span>, validation_data=(test_images, test_labels))</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 训练完毕，使用测试集来评估模型精度</span></span><br><span class="line">test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\n最终测试集上的精度为:&#x27;</span>, test_acc)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存模型</span></span><br><span class="line">model.save(<span class="string">&quot;../CNN模型&quot;</span>)  <span class="comment"># 这是自定义的路径,删除&quot;/兼收并蓄&quot;即可直接运行</span></span><br></pre></td></tr></table></figure>
+
+<p>现在来让我们看一下运行结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629213424923.png" alt="image-20240629213424923"></p>
+<h3 id="使用训练好的模型进行预测"><a href="#使用训练好的模型进行预测" class="headerlink" title="使用训练好的模型进行预测"></a>使用训练好的模型进行预测</h3><h4 id="使用MINIST数据集的测试集"><a href="#使用MINIST数据集的测试集" class="headerlink" title="使用MINIST数据集的测试集"></a>使用MINIST数据集的测试集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 导入数据集</span></span><br><span class="line">mnist = tf.keras.datasets.mnist</span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()</span><br><span class="line"><span class="comment"># 加入待预测的图像及其标签</span></span><br><span class="line">show_images, show_labels = test_images[<span class="number">0</span>:<span class="number">20</span>], test_labels[<span class="number">0</span>:<span class="number">20</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;所选取的测试集图片的标签is:&quot;</span>, show_labels)</span><br><span class="line"><span class="comment"># 引入模型</span></span><br><span class="line">model = tf.keras.models.load_model(<span class="string">&quot;../CNN模型&quot;</span>)</span><br><span class="line"><span class="comment"># 开始预测</span></span><br><span class="line">predictions = model.predict(show_images)</span><br><span class="line"><span class="comment"># 预测完成</span></span><br><span class="line">predictions_num = tf.argmax(predictions, <span class="number">1</span>)</span><br><span class="line"><span class="comment"># 输出预测标签</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;所预测的标签为:&quot;</span>, predictions_num)</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行结果</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629214134077.png" alt="image-20240629214134077"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629213832569.png" alt="image-20240629213832569"></p>
+<p>我们可以看到，全都预测对了</p>
+<h4 id="识手写数字识别"><a href="#识手写数字识别" class="headerlink" title="识手写数字识别"></a>识手写数字识别</h4><p>接下来让我们来试试自己写的数字能不能识别</p>
+<p>这里我们用画图来画一个28*28的黑底白字的png图</p>
+<img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629214347660.png" alt="image-20240629214347660" style="zoom: 50%;" />
+
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629214514766.png" alt="image-20240629214514766"></p>
+<p>这里我画了一个数字4，然后让我们带入代码中，看看能不能识别出来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取一张自己手写的图片</span></span><br><span class="line">img_01 = tf.io.read_file(<span class="string">&quot;C:/Users/31849/Desktop/数字识别.png&quot;</span>)  <span class="comment"># 要黑白图片路径</span></span><br><span class="line">img02 = tf.io.decode_png(img_01, channels=<span class="number">1</span>)</span><br><span class="line">img03 = tf.image.resize(img02, [<span class="number">28</span>, <span class="number">28</span>])</span><br><span class="line">img = (img03.numpy()).reshape([<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;图片转化之后的形状为:&quot;</span>, img.shape)</span><br><span class="line"><span class="comment"># 运用模型进行预测</span></span><br><span class="line">model = tf.keras.models.load_model(<span class="string">&quot;../CNN模型&quot;</span>)</span><br><span class="line">predictions = model.predict(img)</span><br><span class="line">predictions_num = tf.argmax(predictions, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;你的模型认为该数字为:&quot;</span>, predictions_num.numpy())</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行结果：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240629214805423.png" alt="image-20240629214805423"></p>
+<p>对了！ 这说明我们训练的模型有用！</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_62819329/article/details/128086899?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522171955654416777224492251%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=171955654416777224492251&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~hot_rank-6-128086899-null-null.142%5Ev100%5Epc_search_result_base4&utm_term=%E5%9B%9B%E3%80%81%E6%89%8B%E5%86%99%E4%BD%93%E8%AF%86%E5%88%AB%20cnn&spm=1018.2226.3001.4187">基于CNn的MINIST手写体识别| (CSDN)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46284685/article/details/111038276">血泪经验！总结安装tensorflow库全教程 | (CSDN)</a></li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/3211.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Hadoop3.3.4--Linux编译安装</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/%E5%A4%B4%E5%83%8F.png" class="soft-size--round soft-style--box" alt="Ty Leo">
+    
+    
+      <h2>Ty Leo</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>20</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        2
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        6
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Tensorflow"><span class="toc-number">1.</span> <span class="toc-text">安装Tensorflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MINIST%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">MINIST数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">3.</span> <span class="toc-text">训练CNN卷积神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%AE%AD%E7%BB%83%E5%A5%BD%E7%9A%84%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E9%A2%84%E6%B5%8B"><span class="toc-number">4.</span> <span class="toc-text">使用训练好的模型进行预测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number"></span> <span class="toc-text">参考文献</span></a>
+  </div>
+</section>
+
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            学习笔记 (14)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E6%95%99%E7%A8%8B/">
+            教程 (5)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Hadoop/" style="font-size: 10px;" class="tags-cloud-0">Hadoop</a> <a href="/tags/Python/" style="font-size: 15px;" class="tags-cloud-5">Python</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 15px;" class="tags-cloud-5">前端</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;" class="tags-cloud-0">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;" class="tags-cloud-10">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;" class="tags-cloud-0">机器学习</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/chenthesky" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">Ty Leo</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css"> 
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</div>
+
+
+
+</body>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
+</html>
