@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="Ty Leo">
+  
+
+  
+
+  
+
+  <title>记一次爬虫经历 | Ty Leo&#39;s BLOG</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Ty Leo&#39;s BLOG
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">记一次爬虫经历</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ty Leo</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-07-23T13:05:27.173Z" itemprop="datePublished">2024-07-23</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <p><strong>由于项目需要用到大量的农业科普信息数据，所以通过爬虫来获取这些信息并写入数据库</strong></p>
+<h3 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h3><p>整体的思路就是先查看网站的源代码，看看是否可爬，以及数据是否要通过接口来获取，然后根据每个网页源码中的具体字段来获取标题，来源，作者等等信息，最后再写入数据库</p>
+<p>这里 我爬取的网站以<a target="_blank" rel="noopener" href="http://www.agri.cn/search/?searchWord=%E7%A7%91%E6%99%AE&amp;pageNo=1&amp;pageSize=10&amp;orderby=-docreltime">中国农业信息网</a>为例</p>
+<h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入所需库</span></span><br><span class="line"><span class="keyword">import</span> warnings   <span class="comment">#消除警告</span></span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>,category=DeprecationWarning)  </span><br><span class="line"><span class="keyword">import</span> requests  </span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据库配置</span></span><br><span class="line">DB_HOST = <span class="string">&quot;localhost&quot;</span></span><br><span class="line">DB_PORT = <span class="number">3306</span></span><br><span class="line">DB_USER = <span class="string">&quot;root&quot;</span></span><br><span class="line">DB_PASSWORD = <span class="string">&quot;123456&quot;</span></span><br><span class="line">DB_NAME = <span class="string">&quot;crawling_agriculture&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#基础url配置</span></span><br><span class="line">base_url_front = <span class="string">&#x27;http://www.agri.cn/was5/web/search?channelid=211475&amp;keyword=%E7%A7%91%E6%99%AE&amp;perpage=10&amp;page=&#x27;</span></span><br><span class="line">base_url_back = <span class="string">&#x27;&amp;orderby=-docreltime&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取总网页中的各个分页面链接"><a href="#获取总网页中的各个分页面链接" class="headerlink" title="获取总网页中的各个分页面链接"></a>获取总网页中的各个分页面链接</h3><p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723182659651.png" alt="image-20240723182659651"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723183034197.png" alt="image-20240723183034197"></p>
+<p>首先，我们观察这个网页及其网页的源代码我们可以发现，网页源码中有一部分内容被隐藏了，因此，需要通过接口来实现</p>
+<p>通过接口获取隐藏内容参考: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38270802/article/details/90204609">获取隐藏了部分内容的网页源代码，审查元素可以，查看源代码不行。学习python爬虫_爬虫获取的网页源码有隐藏-CSDN博客</a></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;recordCount&quot;</span><span class="punctuation">:</span> <span class="number">9721</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pageSize&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;currentPage&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;items&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;docabstract&quot;</span><span class="punctuation">:</span> <span class="string">&quot;列、克新系列、东农系列等20余个马铃薯优良新品种在绥化地区的生长表现、抗性特点与用途进行了现场介绍，希望大家以后要根据自己的土地现状、市场供需实际选择品种，实现丰产又丰收。绥化分院马铃薯科研团队向农户们科普马铃薯晚疫病相关知识，并现场展示了利用无人机防控病虫害的现代科技。乡亲们按各自需求一一咨询。有种植户拿出田里生病的马铃薯秧请专家们“把脉”，并认真记下专家们给的“药方”。　　专家团来到北林区兴福乡民权&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;docid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8654549&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;docreltime&quot;</span><span class="punctuation">:</span><span class="string">&quot;2024.07.2212: 02: 00&quot;</span><span class="punctuation">,</span><span class="attr">&quot;doctitle&quot;</span><span class="punctuation">:</span><span class="string">&quot;专家团田间“把脉”马铃薯&quot;</span><span class="punctuation">,</span><span class="attr">&quot;docpuburl&quot;</span><span class="punctuation">:</span><span class="string">&quot;http: //www.agri.cn/zx/xxlb/hlj/202407/t20240722_8654549.htm&quot;</span><span class="punctuation">&#125;</span>......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>观察接口内容，我们发现我们需要的各个页面的链接在docpuburl字段里面 所以我们需要获取到这个字段内容，并存在一个列表中 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">3</span>): <span class="comment">#选取1-3页内容</span></span><br><span class="line">    page_links = []  <span class="comment">#定义一个列表存储各个页面的跳转链接</span></span><br><span class="line">    url = <span class="string">f&#x27;<span class="subst">&#123;base_url_front&#125;</span><span class="subst">&#123;page&#125;</span><span class="subst">&#123;base_url_back&#125;</span>&#x27;</span> <span class="comment">#组成 获取不同页码隐藏内容 的接口的链接</span></span><br><span class="line">    base_response = requests.get(url)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查响应状态码</span></span><br><span class="line">    <span class="keyword">if</span> base_response.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            parsed_data = base_response.json()</span><br><span class="line">        <span class="keyword">except</span> ValueError:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;响应内容不是有效的 JSON 格式&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(base_response.text)  <span class="comment"># 打印响应内容以便调试</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求失败，状态码: <span class="subst">&#123;base_response.status_code&#125;</span>,网址：<span class="subst">&#123;url&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取 接口中的 doctitle 和 docpuburl</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> parsed_data[<span class="string">&#x27;items&#x27;</span>]:</span><br><span class="line">    	<span class="keyword">if</span> item[<span class="string">&#x27;doctitle&#x27;</span>] <span class="keyword">and</span> item[<span class="string">&#x27;docpuburl&#x27;</span>]:</span><br><span class="line">   			 page_links.append(item[<span class="string">&#x27;docpuburl&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>在上面代码中，我们先定义一个列表来存储访问各个网页的链接，然后组成 用来获取不同页码中隐藏内容的接口链接，然后使用try-except捕捉报错信息（如果因为这个链接报错的话），最后把接口获取到的每一个网页的跳转链接写入到列表中，接下来就可以对每个页面进行单独分析 来编写爬取各个页面的代码了</p>
+<h3 id="各个页面具体信息获取"><a href="#各个页面具体信息获取" class="headerlink" title="各个页面具体信息获取"></a>各个页面具体信息获取</h3><h4 id="标题的爬取"><a href="#标题的爬取" class="headerlink" title="标题的爬取"></a>标题的爬取</h4><p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723190655341.png" alt="image-20240723190655341"></p>
+<p>首先来看页面中源码，我们可以发现标题在<code>&lt;div class=&quot;detailCon_info_tit&quot;&gt; &lt;/div&gt;</code>标签中 当然，光看这一个页面是不行的，通过查看多个网页源码，发现标题都在<code>&lt;div class=&quot;detailCon_info_tit&quot;&gt; &lt;/div&gt;</code>标题中，所以我们就以这个为基础来写（有不一样的后期再改）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&quot;detailCon_info_tit&quot;</span>).get_text(strip=<span class="literal">True</span>)  <span class="comment"># 标题</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我是使用的beautifusoup来获取的，如果你习惯使用正则表达式也一样，代码中的<code>get_text(strip=True)</code> 方法是获取标签中的文本，以及删除两端多余的空格</p>
+<h4 id="作者，来源，发布时间的爬取"><a href="#作者，来源，发布时间的爬取" class="headerlink" title="作者，来源，发布时间的爬取"></a>作者，来源，发布时间的爬取</h4><p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723191830490.png" alt="image-20240723191830490"></p>
+<p>同样的 观察这个网页源代码我们可以发现 <strong>作者，来源， 和发布时间</strong>都在<code>&lt;span class=&quot;mess_text&quot;&gt;&lt;/span&gt;</code>标签里面 然鹅 通过观察多个网页源码发现 有的网页他 没有作者信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723192141886.png" alt="image-20240723192141886"></p>
+<p>所以 这个时候我们就需要来判断一下 作者信息是否为空 再来获取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 作者</span></span><br><span class="line">author_span = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">1</span>].text <span class="comment">#当有作者信息时</span></span><br><span class="line"><span class="keyword">if</span> author_span != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">    author = author_span.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>] <span class="comment">#获取作者的名字</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    author = author_span <span class="comment">#当没有作者信息时  作者信息为空</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面代码中 我们先使用<code>find_all</code>方法查找出<code>&lt;span class=&quot;mess_text&quot;&gt;&lt;/span&gt;</code>标签中所有的信息即 ：发布时间，作者，来源，因为<code>find_all</code>方法返回的是一个列表，所以我们使用索引下标方式来获取包含作者信息的<code>span</code>标签 ，然后使用<code>text</code>属性，获取<code>&lt;span&gt;</code>标签中的文字内容，不包括任何HTML标签。如果作者信息不为空时，我们将<code>span</code>标签中的作者信息利用<code>split</code>方法分割，因为标签中的作者信息形如  作者：***  而我们只需要具体名字。</p>
+<p>对于发布时间和来源，同理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">publish_date = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">0</span>].text.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 发布时间</span></span><br><span class="line">source = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">2</span>].text.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 来源</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="内容和图片链接的爬取"><a href="#内容和图片链接的爬取" class="headerlink" title="内容和图片链接的爬取"></a>内容和图片链接的爬取</h4><p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723194131010.png" alt="image-20240723194131010"></p>
+<p>通过观察 我们能发现 这个页面的内容，保存在了<code>&lt;div class=&quot;content_body_box ArticleDetails&quot;&gt;&lt;/div&gt;</code>标签里面，因此 我们可以通过获取这个标签中的内容来获取这个页面内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br></pre></td></tr></table></figure>
+
+<p>但是！通过多次观察以及报错经历 发现事情并不会这么简单 这个网站中的页面内容有好几种存储方式 这里我选择其中三种占比最多的  其他就不管了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;content_body_box ArticleDetails&quot;</span>):</span><br><span class="line">	content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取图片  由于有的网页的图片是绝对路径  有的是相对路径 所以需要分别处理 根据每一个页面的url链接 获取 链接</span></span><br><span class="line">	relative_url = <span class="string">&#x27;/&#x27;</span>.join(page_url.split(<span class="string">&#x27;/&#x27;</span>)[:-<span class="number">1</span>])  <span class="comment"># 去掉最后一部分</span></span><br><span class="line">	images = []</span><br><span class="line">	<span class="keyword">for</span> img <span class="keyword">in</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).find_all(<span class="string">&#x27;img&#x27;</span>):</span><br><span class="line">		src = img[<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">		<span class="comment"># 检查是否是相对路径</span></span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> src.startswith(<span class="string">&#x27;http&#x27;</span>):</span><br><span class="line">			src = <span class="string">f&#x27;<span class="subst">&#123;relative_url&#125;</span>/<span class="subst">&#123;src.lstrip(<span class="string">&quot;./&quot;</span>)&#125;</span>&#x27;</span>  <span class="comment"># 替换为正确的基础URL</span></span><br><span class="line">		images.append(src)</span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;ArticleDetails&#x27;</span>):</span><br><span class="line">	content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;ArticleDetails&#x27;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line">	images = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;Custom_UnionStyle&quot;</span>):</span><br><span class="line">	content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&quot;Custom_UnionStyle&quot;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line">	images = <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面代码中，我们先判断网页保存内容的标签是否为我们选取的，如果是，则用<code>get_text()</code>方法获取文本并利用<code>strip()</code>方法分割</p>
+<p>其他两种也类似</p>
+<h4 id="图片的爬取"><a href="#图片的爬取" class="headerlink" title="图片的爬取"></a>图片的爬取</h4><p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723202140894.png" alt="image-20240723202140894"></p>
+<p>通过观察我们可以发现 图片的链接都保存在<code>img</code>标签里面，所以，我们只需要筛选出<code>img</code>标签，就可获取<code>img</code>标签中对应的的<code>src</code>链接，但是还有一个问题，有的网页的图片链接是用的相对路径来保存的，这时候需要将网页网址和他的相对路径结合，才能获取这个图片真正的链接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">relative_url = <span class="string">&#x27;/&#x27;</span>.join(page_url.split(<span class="string">&#x27;/&#x27;</span>)[:-<span class="number">1</span>])  <span class="comment"># 去掉最后一部分</span></span><br><span class="line">images = []</span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).find_all(<span class="string">&#x27;img&#x27;</span>):</span><br><span class="line">    src = img[<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">    <span class="comment"># 检查是否是相对路径</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> src.startswith(<span class="string">&#x27;http&#x27;</span>):</span><br><span class="line">        src = <span class="string">f&#x27;<span class="subst">&#123;relative_url&#125;</span>/<span class="subst">&#123;src.lstrip(<span class="string">&quot;./&quot;</span>)&#125;</span>&#x27;</span>  <span class="comment"># 替换为正确的基础URL</span></span><br><span class="line">    images.append(src)</span><br><span class="line"><span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;ArticleDetails&#x27;</span>):</span><br><span class="line">    images = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;Custom_UnionStyle&quot;</span>):</span><br><span class="line">	images = <span class="string">&#x27;&#x27;</span> </span><br></pre></td></tr></table></figure>
+
+<p>在上面代码中，我们先获取到网页链接中图片的相对路径需要的部分，比如网址链接为：“<a target="_blank" rel="noopener" href="http://www.agri.cn/zx/xxlb/gx/202406/t20240629_8647462.hthttp://www.agri.cn/zx/xxlb/gx/202406/t20240629_8647462.htmm%E2%80%9D%E8%80%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84%E9%83%A8%E5%88%86%E6%98%AF">http://www.agri.cn/zx/xxlb/gx/202406/t20240629_8647462.hthttp://www.agri.cn/zx/xxlb/gx/202406/t20240629_8647462.htmm”而我们需要的部分是</a> ”<a target="_blank" rel="noopener" href="http://www.agri.cn/zx/xxlb/gx/202406%E2%80%9C">http://www.agri.cn/zx/xxlb/gx/202406“</a> 后面再加上图片的相对路径 如：<a target="_blank" rel="noopener" href="http://www.agri.cn/zx/xxlb/gx/202406/W020240629376394428648.jpg">http://www.agri.cn/zx/xxlb/gx/202406/W020240629376394428648.jpg</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/image-20240723203014589.png" alt="image-20240723203014589"></p>
+<p>经过大量的测试发现，图片只有在<code>&lt;div class=&quot;content_body_box ArticleDetails&quot;&gt;&lt;/div&gt;</code>标签里面才会出现</p>
+<h4 id="写入数据库"><a href="#写入数据库" class="headerlink" title="写入数据库"></a>写入数据库</h4><p>现在我们已经获取到了标题，作者，发布时间，来源，内容，图片，网址 接下来写入数据库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cursor.execute(<span class="string">&#x27;&#x27;&#x27;INSERT INTO news_copy2 (title, content, author, publish_date, source, url, images)</span></span><br><span class="line"><span class="string">VALUES (%s, %s, %s, %s, %s, %s, %s)&#x27;&#x27;&#x27;</span>, (title, content, author, publish_date, source, page_i, <span class="string">&#x27;,&#x27;</span>.join(images)))</span><br><span class="line"></span><br><span class="line">conn.commit()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+
+<p>写入数据库很简单 就不多说了  </p>
+<h3 id="成品"><a href="#成品" class="headerlink" title="成品"></a>成品</h3><p>在上面的基础之上再加上一些异常捕获机制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>,category=DeprecationWarning)</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据库配置</span></span><br><span class="line">DB_HOST = <span class="string">&quot;localhost&quot;</span></span><br><span class="line">DB_PORT = <span class="number">3306</span></span><br><span class="line">DB_USER = <span class="string">&quot;root&quot;</span></span><br><span class="line">DB_PASSWORD = <span class="string">&quot;123456&quot;</span></span><br><span class="line">DB_NAME = <span class="string">&quot;crawling_agriculture&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#基础url配置</span></span><br><span class="line">base_url_front = <span class="string">&#x27;http://www.agri.cn/was5/web/search?channelid=211475&amp;keyword=%E7%A7%91%E6%99%AE&amp;perpage=10&amp;page=&#x27;</span></span><br><span class="line">base_url_back = <span class="string">&#x27;&amp;orderby=-docreltime&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">974</span>):</span><br><span class="line">    page_links = []</span><br><span class="line">    url = <span class="string">f&#x27;<span class="subst">&#123;base_url_front&#125;</span><span class="subst">&#123;page&#125;</span><span class="subst">&#123;base_url_back&#125;</span>&#x27;</span></span><br><span class="line"></span><br><span class="line">    base_response = requests.get(url)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查响应状态码</span></span><br><span class="line">    <span class="keyword">if</span> base_response.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            parsed_data = base_response.json()</span><br><span class="line">        <span class="keyword">except</span> ValueError:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;响应内容不是有效的 JSON 格式&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(base_response.text)  <span class="comment"># 打印响应内容以便调试</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求失败，状态码: <span class="subst">&#123;base_response.status_code&#125;</span>,网址：<span class="subst">&#123;url&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取 接口中的 doctitle 和 docpuburl</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> parsed_data[<span class="string">&#x27;items&#x27;</span>]:</span><br><span class="line">        <span class="keyword">if</span> item[<span class="string">&#x27;doctitle&#x27;</span>] <span class="keyword">and</span> item[<span class="string">&#x27;docpuburl&#x27;</span>]:</span><br><span class="line">            page_links.append(item[<span class="string">&#x27;docpuburl&#x27;</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> page_i <span class="keyword">in</span> page_links:</span><br><span class="line">        page_url = page_i</span><br><span class="line"></span><br><span class="line">        page_response = requests.get(page_url)</span><br><span class="line">        page_soup = BeautifulSoup(page_response.content, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 提取信息  由于这个网站有的网页内容格式不一样 为了避免中途报错 所以用try except</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            title = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&quot;detailCon_info_tit&quot;</span>).get_text(strip=<span class="literal">True</span>)  <span class="comment"># 标题</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 作者</span></span><br><span class="line">            author_span = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">1</span>].text</span><br><span class="line">            <span class="keyword">if</span> author_span != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">                author = author_span.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                author = author_span</span><br><span class="line"></span><br><span class="line">            publish_date = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">0</span>].text.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 发布时间</span></span><br><span class="line">            source = page_soup.find_all(<span class="string">&#x27;span&#x27;</span>, class_=<span class="string">&#x27;mess_text&#x27;</span>)[<span class="number">2</span>].text.split(<span class="string">&#x27;：&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 来源</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">#  内容</span></span><br><span class="line">            <span class="keyword">if</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;content_body_box ArticleDetails&quot;</span>):</span><br><span class="line">                content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># 获取图片  由于有的网页的图片是绝对路径  有的是相对路径 所以需要分别处理 根据每一个页面的url链接 获取 链接</span></span><br><span class="line">                relative_url = <span class="string">&#x27;/&#x27;</span>.join(page_url.split(<span class="string">&#x27;/&#x27;</span>)[:-<span class="number">1</span>])  <span class="comment"># 去掉最后一部分</span></span><br><span class="line">                images = []</span><br><span class="line">                <span class="keyword">for</span> img <span class="keyword">in</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;content_body_box ArticleDetails&#x27;</span>).find_all(<span class="string">&#x27;img&#x27;</span>):</span><br><span class="line">                    src = img[<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">                    <span class="comment"># 检查是否是相对路径</span></span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> src.startswith(<span class="string">&#x27;http&#x27;</span>):</span><br><span class="line">                        src = <span class="string">f&#x27;<span class="subst">&#123;relative_url&#125;</span>/<span class="subst">&#123;src.lstrip(<span class="string">&quot;./&quot;</span>)&#125;</span>&#x27;</span>  <span class="comment"># 替换为正确的基础URL</span></span><br><span class="line">                    images.append(src)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;ArticleDetails&#x27;</span>):</span><br><span class="line">                content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;ArticleDetails&#x27;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line">                images = <span class="string">&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">elif</span> page_soup.find(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;Custom_UnionStyle&quot;</span>):</span><br><span class="line">                content = page_soup.find(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&quot;Custom_UnionStyle&quot;</span>).get_text().strip(<span class="string">&#x27;\n&#x27;</span>)  <span class="comment"># 内容格式化</span></span><br><span class="line">                images = <span class="string">&#x27;&#x27;</span></span><br><span class="line">            <span class="comment"># images = [img[&#x27;src&#x27;] for img in page_soup.find(&#x27;div&#x27;, class_=&#x27;content_body_box ArticleDetails&#x27;).find_all(&#x27;img&#x27;)]</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;错误发生在页面: <span class="subst">&#123;page_url&#125;</span>, 错误信息: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span>  <span class="comment"># 跳过当前页面，继续下一个页面</span></span><br><span class="line"></span><br><span class="line">        conn = pymysql.connect(host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASSWORD, db=DB_NAME, charset=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">        cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 插入数据</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cursor.execute(<span class="string">&#x27;&#x27;&#x27;INSERT INTO news_copy2 (title, content, author, publish_date, source, url, images)</span></span><br><span class="line"><span class="string">            VALUES (%s, %s, %s, %s, %s, %s, %s)&#x27;&#x27;&#x27;</span>, (title, content, author, publish_date, source, page_i, <span class="string">&#x27;,&#x27;</span>.join(images)))</span><br><span class="line">            conn.commit()</span><br><span class="line">        <span class="keyword">except</span> pymysql.err.DataError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;数据插入错误，跳过该条记录: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span>  <span class="comment"># 跳过当前记录</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            conn.close()</span><br></pre></td></tr></table></figure>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/2242.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">CNN卷积神经网络的MINIST手写体识别</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://img.picui.cn/free/2024/07/08/668bee87db0a4.png" class="soft-size--round soft-style--box" alt="Ty Leo">
+    
+    
+      <h2>Ty Leo</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>21</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        2
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        6
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">基础配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%80%BB%E7%BD%91%E9%A1%B5%E4%B8%AD%E7%9A%84%E5%90%84%E4%B8%AA%E5%88%86%E9%A1%B5%E9%9D%A2%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">获取总网页中的各个分页面链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E4%B8%AA%E9%A1%B5%E9%9D%A2%E5%85%B7%E4%BD%93%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96"><span class="toc-number">4.</span> <span class="toc-text">各个页面具体信息获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%93%81"><span class="toc-number">5.</span> <span class="toc-text">成品</span></a></li></ol>
+  </div>
+</section>
+
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            学习笔记 (14)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E6%95%99%E7%A8%8B/">
+            教程 (5)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Hadoop/" style="font-size: 10px;" class="tags-cloud-0">Hadoop</a> <a href="/tags/Python/" style="font-size: 15px;" class="tags-cloud-5">Python</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 15px;" class="tags-cloud-5">前端</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;" class="tags-cloud-0">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;" class="tags-cloud-10">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;" class="tags-cloud-0">机器学习</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/chenthesky" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2024 <a href="/" target="_blank">Ty Leo</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- dplayer 视频 start -->
+<script type="text/javascript" src="https://unpkg.com/hls.js@1.4.8/dist/hls.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+<script type="text/javascript">
+  const dplayer = document.querySelectorAll(".dplayer-box");
+  dplayer && initDPlayer(dplayer);
+  function initDPlayer(els) {
+    let elsArr = Array.from(els);
+    elsArr.forEach(el => {
+      let url = el.dataset.url;
+      let pic = el.dataset.pic;
+      let subtitle = el.dataset.subtitle;
+
+      let options = {
+        container: el,
+        video: { url: url, pic: pic },
+        theme: "#b7daff",
+        autoplay: false,
+        loop: false,
+        mutex: true,
+      }
+
+      if (subtitle) {
+        options.subtitle = {
+          url: el.dataset.subtitle,
+        }
+      }
+      new DPlayer(options);
+    });
+  }
+</script>
+<!-- dplayer 视频 end -->
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css"> 
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</div>
+
+
+
+</body>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
+</html>
