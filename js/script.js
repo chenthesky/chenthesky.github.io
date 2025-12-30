@@ -119,6 +119,6 @@ function handleLazyBG () {
   }
 }
 // Pjax 完成后，重新加载上面的函数
-document.addEventListener("pjax:complete", function () {
+$(document).on("pjax:complete", function () {
   handleLazyBG ();
 });
