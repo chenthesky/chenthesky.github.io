@@ -29,7 +29,7 @@
 
   
 
-  <title>图 | LeoskyC Blog</title>
+  <title>RAG学习 | LeoskyC Blog</title>
 
   
 
@@ -106,16 +106,16 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">图</h1>
+          <h1 class="title-wrap">RAG学习</h1>
           <h2 class="title-sub-wrap">
             <strong>LeoskyC</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-02-23T09:18:00.064Z" itemprop="datePublished">2024-02-23</time>
+            <time  class="article-date" datetime="2026-03-10T13:10:46.994Z" itemprop="datePublished">2026-03-10</time>
           </h2>
           
             <h2 class="last-time">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-29T11:45:20.982Z" itemprop="dateUpdated">2024-02-29</time>
+              <time  class="article-updated" datetime="2026-04-15T00:49:30.184Z" itemprop="dateUpdated">2026-04-15</time>
             </h2>
           
           
@@ -126,7 +126,7 @@
 </ul>
           <ul class="wrap-list dark">
   
-    <li><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">🏷️ 数据结构</a></li>
+    <li><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">🏷️ 人工智能</a></li>
   
 </ul>
         </div>
@@ -150,10 +150,19 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <blockquote>
-<p><strong>对于有向图的n个顶点  最多有n * n（n-1）条边<br>对于无向图的n个顶点  最多有n * n（n-1）&#x2F;2条边<br>当n足够大时 边数趋向于顶点数的平方</strong></p>
-</blockquote>
-<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p><img src="https://img2.imgtp.com/2024/02/29/0OxaOSLu.png" alt=" "></p>
+        <h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p><img src="https://images.chenthesky.top/PicGo/1776213953550.png" alt="image-20260317193250433"></p>
+<h2 id="文本向量"><a href="#文本向量" class="headerlink" title="文本向量"></a>文本向量</h2><h3 id="稀疏"><a href="#稀疏" class="headerlink" title="稀疏"></a>稀疏</h3><p><img src="https://images.chenthesky.top/PicGo/1776213960954.png" alt="image-20260310203616502"></p>
+<p>去重与不去重，都是分块以后，逐个统计出现次数。  tf-idf 不是单纯的0&#x2F;1，而是根据他的一个公式设定值</p>
+<h3 id="稠密"><a href="#稠密" class="headerlink" title="稠密"></a>稠密</h3><h4 id="词嵌入word-embedding"><a href="#词嵌入word-embedding" class="headerlink" title="词嵌入word-embedding"></a>词嵌入word-embedding</h4><p><img src="https://images.chenthesky.top/PicGo/1776213975697.png" alt="image-20260310203924739"></p>
+<h2 id="向量数据库"><a href="#向量数据库" class="headerlink" title="向量数据库"></a>向量数据库</h2><p><img src="https://images.chenthesky.top/PicGo/1776213970062.png" alt="image-20260310204109739"></p>
+<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><h3 id="基于文本相似度检索"><a href="#基于文本相似度检索" class="headerlink" title="基于文本相似度检索"></a>基于文本相似度检索</h3><p><img src="https://images.chenthesky.top/PicGo/1776213987563.png" alt="image-20260310204637381"></p>
+<p><strong>能够深度挖掘语义</strong> 适合复杂的文本</p>
+<h3 id="基于关键词检索"><a href="#基于关键词检索" class="headerlink" title="基于关键词检索"></a>基于关键词检索</h3><p>对原始文本进行分词去重，构建出关键词和对应文档的映射表，检索后直接发给大模型。 <strong>当用户问题简单，能直接命中合适</strong></p>
+<p>比如 法律条文</p>
+<p><img src="https://images.chenthesky.top/PicGo/1776213990686.png" alt="image-20260310204845524"></p>
+<h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><p>构造提示词，选择大模型（开源&#x2F;闭源）</p>
+<img src="https://images.chenthesky.top/PicGo/1776213994088.png" alt="image-20260310205647393" style="zoom:50%;" />
+
 
       </section>
 
@@ -161,28 +170,14 @@
       
         <nav class="article-nav">
           
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/blogs/9199.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">栈</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
           
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
     <div class="card-text">
       
-        <a href="/blogs/5b58.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">树</h2>
+        <a href="/blogs/e126.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">记一次爬虫经历</h2>
         </a>
       
       <div class="card-text--row">Older</div>
@@ -244,7 +239,7 @@
     <span>TOC</span>
   </div>
   <div class="widget-body">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%BB%E6%8E%A5%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">邻接表</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%90%91%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">文本向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%80%E7%96%8F"><span class="toc-number">2.1.</span> <span class="toc-text">稀疏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86"><span class="toc-number">2.2.</span> <span class="toc-text">稠密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">3.</span> <span class="toc-text">向量数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2"><span class="toc-number">4.</span> <span class="toc-text">检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%A3%80%E7%B4%A2"><span class="toc-number">4.1.</span> <span class="toc-text">基于文本相似度检索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%85%B3%E9%94%AE%E8%AF%8D%E6%A3%80%E7%B4%A2"><span class="toc-number">4.2.</span> <span class="toc-text">基于关键词检索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90"><span class="toc-number">5.</span> <span class="toc-text">生成</span></a></li></ol>
   </div>
 </section>
 
