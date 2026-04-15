@@ -29,7 +29,7 @@
 
   
 
-  <title>Java实现稀疏矩阵 | LeoskyC Blog</title>
+  <title>Transformer | LeoskyC Blog</title>
 
   
 
@@ -106,16 +106,16 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">Java实现稀疏矩阵</h1>
+          <h1 class="title-wrap">Transformer</h1>
           <h2 class="title-sub-wrap">
             <strong>LeoskyC</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-02-23T06:54:26.613Z" itemprop="datePublished">2024-02-23</time>
+            <time  class="article-date" datetime="2026-03-21T12:54:23.761Z" itemprop="datePublished">2026-03-21</time>
           </h2>
           
             <h2 class="last-time">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-27T08:08:48.076Z" itemprop="dateUpdated">2024-02-27</time>
+              <time  class="article-updated" datetime="2026-04-15T00:59:58.107Z" itemprop="dateUpdated">2026-04-15</time>
             </h2>
           
           
@@ -125,6 +125,8 @@
   
 </ul>
           <ul class="wrap-list dark">
+  
+    <li><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">🏷️ 人工智能</a></li>
   
 </ul>
         </div>
@@ -148,7 +150,81 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.Chen.study01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedHashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Blue_wool</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 11.012</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">study1</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span>[][] array1 = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">11</span>][<span class="number">11</span>];</span><br><span class="line">        array1[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">        array1[<span class="number">2</span>][<span class="number">3</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出原始的数组</span></span><br><span class="line">        System.out.println(<span class="string">&quot;原始的数组为：&quot;</span>);</span><br><span class="line">        out_put(array1);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//获取有效值的个数</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j] != <span class="number">0</span>)</span><br><span class="line">                    sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;有效值的个数为：&quot;</span>+sum);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建稀疏数组</span></span><br><span class="line">        <span class="type">int</span>[][] array2 = <span class="keyword">new</span> <span class="title class_">int</span>[sum+<span class="number">1</span>][<span class="number">3</span>];</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">2</span>] = sum;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//遍历二维数组</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1[i].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j]!=<span class="number">0</span>)&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                    array2[count][<span class="number">0</span>] = i;</span><br><span class="line">                    array2[count][<span class="number">1</span>] = j;</span><br><span class="line">                    array2[count][<span class="number">2</span>] = array1[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;稀疏数组为：&quot;</span>);</span><br><span class="line">        out_put(array2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//还原原数组</span></span><br><span class="line">        <span class="type">int</span>[][] array3 = <span class="keyword">new</span> <span class="title class_">int</span>[array2[<span class="number">0</span>][<span class="number">1</span>]][array2[<span class="number">0</span>][<span class="number">1</span>]];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; array2.length; i++) &#123;</span><br><span class="line">            array3[array2[i][<span class="number">0</span>]][array2[i][<span class="number">1</span>]]=array2[i][<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;还原的数组为：&quot;</span>);</span><br><span class="line">        out_put(array3);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">out_put</span><span class="params">(<span class="type">int</span>[][] args)</span>&#123;  <span class="comment">//定义一个输出方法</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] ints : args) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ints1 : ints) &#123;</span><br><span class="line">                System.out.print(ints1+<span class="string">&quot;\t&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p><img src="https://images.chenthesky.top/PicGo/1776214649972.png" alt="image-20260321195741066"></p>
+<p>把线性函数 转换成非线性，最终目标是找出系数 <strong>w</strong> 和 <strong>b</strong> </p>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p><img src="https://images.chenthesky.top/PicGo/1776214651352.png" alt="image-20260321200040317"></p>
+<p>x1和y1(<strong>输入层</strong>) 经过一次线性变换，再经过一次激活函数，就变成了<strong>隐藏层a</strong>, 隐藏层a经过一次线性变换，再经过一次激活函数，就变成<strong>输出层b</strong>，</p>
+<h3 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h3><p>从左到右计算出值</p>
+<h2 id="残差"><a href="#残差" class="headerlink" title="残差"></a>残差</h2><p>真实值与预测值的差值 </p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>表示真实值与预测值的差值的函数</p>
+<p><img src="https://images.chenthesky.top/PicGo/1776214655800.png" alt="image-20260321201045995"></p>
+<p>线性函数：就求偏导，求最小值</p>
+<p>非线性：一点点试 <strong>w</strong>以及 <strong>b</strong>的值，看看<strong>L(w,b)</strong> 有什么变化，让参数向着让 <strong>L</strong>变小的方向去调整</p>
+<h2 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h2><p><img src="https://images.chenthesky.top/PicGo/1776214661316.png" alt="image-20260321202022801"></p>
+<p>L对w的偏导，就是w变化对L的影响，其中的 <strong>参数n</strong> 是学习率 ，这些偏导数构成的向量就叫<strong>梯度</strong>，不断变化w和b，让损失函数逐渐变小的过程，求出w和b，就是<strong>梯度下降</strong></p>
+<p>从后往前逐渐层求偏导，就能得到L对w的偏导， 通过<strong>链式法则</strong> （微积分中复合函数求导）从后往前更新参数的过程叫 <strong>反向传播</strong> </p>
+<p><img src="https://images.chenthesky.top/PicGo/1776214663436.png" alt="image-20260321202633262"></p>
+<h3 id="梯度消失"><a href="#梯度消失" class="headerlink" title="梯度消失"></a>梯度消失</h3><p>网络越深，梯度反向传播时越来越小，参数更新困难</p>
+<h3 id="梯度爆炸"><a href="#梯度爆炸" class="headerlink" title="梯度爆炸"></a>梯度爆炸</h3><p>梯度数值越来越大，参数数值调整失去控制 </p>
+<h2 id="泛化能力"><a href="#泛化能力" class="headerlink" title="泛化能力"></a>泛化能力</h2><p>就是在没见过的数据上的表现能力</p>
+<h2 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h2><p>就是训练数据表现好，新数据表现糟糕。</p>
+<p>为什么会出现过拟合？ 问题很简单，但是用的模型太复杂，把噪声和随机波动也学会了。</p>
+<p>解决办法： </p>
+<ul>
+<li>简化模型，</li>
+<li>增加数据量，或者对原有的数据进行裁剪，旋转，加噪声，编程更多数据。  这叫 <strong>数据增强</strong> 还能增强模型 <strong>鲁棒性</strong>（让模型不因为输入的小变化而造成很大的改变）</li>
+<li>正则化</li>
+<li>Dropout</li>
+</ul>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>构建新的损失函数来 抑制w的持续增长， 如在在损失函数上加上参数w绝对值 这个过程就叫<strong>正则化</strong></p>
+<p><img src="https://images.chenthesky.top/PicGo/1776214666329.png" alt="image-20260321204508908"></p>
+<h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>训练过程中，每次随机丢弃一些参数，让模型依赖普通参数，避免关键参数的过度依赖</p>
+<h2 id="CNN（卷积神经网络）"><a href="#CNN（卷积神经网络）" class="headerlink" title="CNN（卷积神经网络）"></a>CNN（卷积神经网络）</h2><p>主要用于静态数据，比如图片</p>
+<img src="https://images.chenthesky.top/PicGo/1776214668423.png" alt="image-20260321210909709" style="zoom: 33%;" />
+
+<img src="https://images.chenthesky.top/PicGo/1776214670041.png" alt="image-20260321211010505" style="zoom: 25%;" />
+
+<p>把其中一个全连接层 替换成卷积层 </p>
+<img src="https://images.chenthesky.top/PicGo/1776214673727.png" alt="image-20260321211229088" style="zoom:25%;" />
+
+<img src="https://images.chenthesky.top/PicGo/1776214675564.png" alt="image-20260321210420530" style="zoom: 25%;" />
+
+<p><strong>池化层</strong> 作用是对卷积层后的特征图像进行降维，保留主要特征</p>
+<h3 id="卷积运算"><a href="#卷积运算" class="headerlink" title="卷积运算"></a>卷积运算</h3><p>用卷积核（一个含有特定值的方阵）逐行扫过并计算（对应位置相乘）  求和 得出的数值形成一个新的图象 这就叫<strong>卷积运算</strong></p>
+<h2 id="RNN（循环神经网络）"><a href="#RNN（循环神经网络）" class="headerlink" title="RNN（循环神经网络）"></a>RNN（循环神经网络）</h2><h3 id="one-hot"><a href="#one-hot" class="headerlink" title="one hot"></a>one hot</h3><p>准备一个超级大向量，每个字仅仅一个1，其余维度都为0 </p>
+<h3 id="embedding"><a href="#embedding" class="headerlink" title="embedding"></a>embedding</h3><p>文本-&gt;token  是tokenizer</p>
+<p>token-&gt;向量是embedding</p>
+<img src="https://images.chenthesky.top/PicGo/1776214678036.png" alt="image-20260316193913607" style="zoom:33%;" />
+
+
+
+<p><strong>嵌入矩阵</strong> 每个词的向量 构成的矩阵 </p>
+<img src="https://images.chenthesky.top/PicGo/1776214680691.png" alt="image-20260321212315886" style="zoom:33%;" />
+
+<p>针对于语言文本，让x1的计算，不着急输出y1，而是输出<strong>h隐藏状态</strong> （因为传统的神经网络没有办法传递词和词之间的关系），然后 <strong>h</strong> 再经过线性变换成y； 然后再让h参与到x2的计算中，如此循环往复</p>
+<h2 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h2><img src="https://images.chenthesky.top/PicGo/1776214682887.png" alt="image-20260324191819802" style="zoom:33%;" />
+
+<p>句子被拆分为向量之后，加上一组位置编码，分别和<strong>Wq,Wk,Wv</strong>(现实中，这个<strong>W权重矩阵</strong>是通过训练得到的)向量相乘，得到每个词对应的qkv向量，q就是<strong>query</strong>，k就是<strong>key</strong> 目录， v就是值 <strong>value</strong></p>
+<img src="https://images.chenthesky.top/PicGo/1776214686934.png" alt="image-20260328194132597" style="zoom: 50%;" />
+
+<h2 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h2><p>给每个词向量增加上下文信息</p>
+<img src="https://images.chenthesky.top/PicGo/1776214692421.png" alt="image-20260324192131407" style="zoom:33%;" />
+
+<p>q1与k2相乘，表示第一个词和第二词的相似度，依此类推</p>
+<img src="https://images.chenthesky.top/PicGo/1776214694735.png" alt="image-20260324192302627" style="zoom:33%;" />
+
+<p>上一步的结果再与v相乘就得到a1. a1就表示，在一个词视角来看，其他词的相似度以及权重是多少，也就是其他词上下文信息</p>
+<img src="https://images.chenthesky.top/PicGo/1776214697113.png" alt="image-20260324192458190" style="zoom:33%;" />
+
+<h3 id="多头注意力"><a href="#多头注意力" class="headerlink" title="多头注意力"></a>多头注意力</h3><img src="https://images.chenthesky.top/PicGo/1776214701509.png" alt="image-20260324192643548" style="zoom:25%;" />
+
+<p>选用两种 <strong>Wqkv</strong> 矩阵 分别计算a1 a2 a3 a4 然后拼接起来，然后再经过一次线性变换（权重矩阵的乘法），就是多头注意力</p>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><img src="https://images.chenthesky.top/PicGo/1776214703315.png" alt="image-20260324193441554" style="zoom: 50%;" />
+
+<p>左边是编码器，右边为解码器</p>
+<h3 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h3><p> 把一堆数字变成「概率」，让它们加起来等于 1，而且会「放大差距」—— 大的数字变得更大，小的变得更小</p>
+<h3 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a>归一化</h3><p><strong>L1 归一化</strong>：把向量<strong>长度变成 1</strong>，用的是<strong>绝对值之和</strong></p>
+<p><strong>L2 归一化</strong>：把向量<strong>长度变成 1</strong>，用的是<strong>平方和开根号</strong></p>
 
       </section>
 
@@ -161,8 +237,8 @@
     
     <div class="card-text">
       
-        <a href="/blogs/198d.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">CSS</h2>
+        <a href="/blogs/e020.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Bert</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -176,8 +252,8 @@
     
     <div class="card-text">
       
-        <a href="/blogs/3705.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">JavaSE</h2>
+        <a href="/blogs/e830.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">FAISS</h2>
         </a>
       
       <div class="card-text--row">Older</div>
@@ -239,7 +315,7 @@
     <span>TOC</span>
   </div>
   <div class="widget-body">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">激活函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">2.</span> <span class="toc-text">神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">2.1.</span> <span class="toc-text">前向传播</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%8B%E5%B7%AE"><span class="toc-number">3.</span> <span class="toc-text">残差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6"><span class="toc-number">5.</span> <span class="toc-text">梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1"><span class="toc-number">5.1.</span> <span class="toc-text">梯度消失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8"><span class="toc-number">5.2.</span> <span class="toc-text">梯度爆炸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B"><span class="toc-number">6.</span> <span class="toc-text">泛化能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88"><span class="toc-number">7.</span> <span class="toc-text">过拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dropout"><span class="toc-number">9.</span> <span class="toc-text">Dropout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CNN%EF%BC%88%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">CNN（卷积神经网络）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E8%BF%90%E7%AE%97"><span class="toc-number">10.1.</span> <span class="toc-text">卷积运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN%EF%BC%88%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%89"><span class="toc-number">11.</span> <span class="toc-text">RNN（循环神经网络）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#one-hot"><span class="toc-number">11.1.</span> <span class="toc-text">one hot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embedding"><span class="toc-number">11.2.</span> <span class="toc-text">embedding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#encoder"><span class="toc-number">12.</span> <span class="toc-text">encoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="toc-number">13.</span> <span class="toc-text">注意力机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">13.1.</span> <span class="toc-text">多头注意力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformer"><span class="toc-number">14.</span> <span class="toc-text">Transformer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#softmax"><span class="toc-number">14.1.</span> <span class="toc-text">softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96"><span class="toc-number">14.2.</span> <span class="toc-text">归一化</span></a></li></ol></li></ol>
   </div>
 </section>
 

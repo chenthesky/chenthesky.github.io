@@ -29,7 +29,7 @@
 
   
 
-  <title>Java实现稀疏矩阵 | LeoskyC Blog</title>
+  <title>Bert | LeoskyC Blog</title>
 
   
 
@@ -106,16 +106,16 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">Java实现稀疏矩阵</h1>
+          <h1 class="title-wrap">Bert</h1>
           <h2 class="title-sub-wrap">
             <strong>LeoskyC</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-02-23T06:54:26.613Z" itemprop="datePublished">2024-02-23</time>
+            <time  class="article-date" datetime="2026-03-25T09:30:43.846Z" itemprop="datePublished">2026-03-25</time>
           </h2>
           
             <h2 class="last-time">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2024-02-27T08:08:48.076Z" itemprop="dateUpdated">2024-02-27</time>
+              <time  class="article-updated" datetime="2026-04-15T01:06:56.863Z" itemprop="dateUpdated">2026-04-15</time>
             </h2>
           
           
@@ -125,6 +125,8 @@
   
 </ul>
           <ul class="wrap-list dark">
+  
+    <li><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">🏷️ 人工智能</a></li>
   
 </ul>
         </div>
@@ -148,36 +150,29 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.Chen.study01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedHashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Blue_wool</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 11.012</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">study1</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span>[][] array1 = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">11</span>][<span class="number">11</span>];</span><br><span class="line">        array1[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">        array1[<span class="number">2</span>][<span class="number">3</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出原始的数组</span></span><br><span class="line">        System.out.println(<span class="string">&quot;原始的数组为：&quot;</span>);</span><br><span class="line">        out_put(array1);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//获取有效值的个数</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j] != <span class="number">0</span>)</span><br><span class="line">                    sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;有效值的个数为：&quot;</span>+sum);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建稀疏数组</span></span><br><span class="line">        <span class="type">int</span>[][] array2 = <span class="keyword">new</span> <span class="title class_">int</span>[sum+<span class="number">1</span>][<span class="number">3</span>];</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">11</span>;</span><br><span class="line">        array2[<span class="number">0</span>][<span class="number">2</span>] = sum;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//遍历二维数组</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; array1.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; array1[i].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (array1[i][j]!=<span class="number">0</span>)&#123;</span><br><span class="line">                    count++;</span><br><span class="line">                    array2[count][<span class="number">0</span>] = i;</span><br><span class="line">                    array2[count][<span class="number">1</span>] = j;</span><br><span class="line">                    array2[count][<span class="number">2</span>] = array1[i][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;稀疏数组为：&quot;</span>);</span><br><span class="line">        out_put(array2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//还原原数组</span></span><br><span class="line">        <span class="type">int</span>[][] array3 = <span class="keyword">new</span> <span class="title class_">int</span>[array2[<span class="number">0</span>][<span class="number">1</span>]][array2[<span class="number">0</span>][<span class="number">1</span>]];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; array2.length; i++) &#123;</span><br><span class="line">            array3[array2[i][<span class="number">0</span>]][array2[i][<span class="number">1</span>]]=array2[i][<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;还原的数组为：&quot;</span>);</span><br><span class="line">        out_put(array3);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">out_put</span><span class="params">(<span class="type">int</span>[][] args)</span>&#123;  <span class="comment">//定义一个输出方法</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] ints : args) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> ints1 : ints) &#123;</span><br><span class="line">                System.out.print(ints1+<span class="string">&quot;\t&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <img src="https://images.chenthesky.top/PicGo/1776215160887.png" alt="image-20260325171512237" style="zoom: 50%;" />
 
+<h2 id="Encodeer"><a href="#Encodeer" class="headerlink" title="Encodeer"></a>Encodeer</h2><img src="https://images.chenthesky.top/PicGo/1776215162450.png" alt="image-20260325171353677" style="zoom:50%;" />
+
+<p>输入的句子采用 <strong>WordPiece</strong>  能够分解词根， 字向量+句向量+位置编码向量 &#x3D; Bert Encoder层的输出</p>
+<h2 id="MLM"><a href="#MLM" class="headerlink" title="MLM"></a>MLM</h2><img src="https://images.chenthesky.top/PicGo/1776215164074.png" alt="image-20260325172055485" style="zoom:50%;" />
+
+<h2 id="NSP"><a href="#NSP" class="headerlink" title="NSP"></a>NSP</h2><p><img src="https://images.chenthesky.top/PicGo/1776215165946.png" alt="image-20260325172303593"></p>
+<h2 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h2><img src="https://images.chenthesky.top/PicGo/1776215169192.png" alt="image-20260325172645048" style="zoom:50%;" />
       </section>
 
       
       
         <nav class="article-nav">
           
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/blogs/198d.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">CSS</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
           
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
     <div class="card-text">
       
-        <a href="/blogs/3705.html" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">JavaSE</h2>
+        <a href="/blogs/3e2b.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Transformer</h2>
         </a>
       
       <div class="card-text--row">Older</div>
@@ -239,7 +234,7 @@
     <span>TOC</span>
   </div>
   <div class="widget-body">
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encodeer"><span class="toc-number">1.</span> <span class="toc-text">Encodeer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLM"><span class="toc-number">2.</span> <span class="toc-text">MLM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSP"><span class="toc-number">3.</span> <span class="toc-text">NSP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">训练过程</span></a></li></ol>
   </div>
 </section>
 

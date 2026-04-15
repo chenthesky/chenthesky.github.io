@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+ 
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="个人博客">
+  
+
+  
+
+  
+    <meta name="author" content="LeoskyC">
+  
+
+  
+
+  
+
+  <title>FAISS | LeoskyC Blog</title>
+
+  
+
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container" id="pjax-container">
+    
+<!-- header container -->
+<header class="header-container post" id="pjax-container">
+  
+    <div class="post-image" style="background-image: url(https://images.chenthesky.top/PicGo/1772160453249.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content" id="pjax-container">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          LeoskyC Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/message/">留言</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">FAISS</h1>
+          <h2 class="title-sub-wrap">
+            <strong>LeoskyC</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2026-03-17T12:49:24.283Z" itemprop="datePublished">2026-03-17</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2026-04-15T01:09:06.955Z" itemprop="dateUpdated">2026-04-15</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">📒 学习笔记</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h2><p><strong>FAISS</strong> 是一个专门用来”在一大堆数字向量里快速找相似项”的工具库。</p>
+<p><strong>什么是”数字向量”？</strong><br>就是一串数字，比如 <code>[0.23, -1.5, 0.88, ...]</code>。现代 AI（比如大模型、图像识别）会把文字、图片、音频等都转成这种向量。两个东西越相似，它们的向量就越”靠近”。</p>
+<h2 id="二、它解决什么问题？"><a href="#二、它解决什么问题？" class="headerlink" title="二、它解决什么问题？"></a>二、它解决什么问题？</h2><p>假设你有 <strong>100 万个向量</strong>，现在给你一个新的向量，问：”哪 10 个最像它？”</p>
+<ul>
+<li>如果你用普通方法（一个个算距离），可能要几秒甚至几分钟。</li>
+<li><strong>FAISS 能在几毫秒到几十毫秒内搞定</strong>，而且结果几乎一样准。</li>
+</ul>
+<p>这就是它的核心价值：<strong>快！还能处理海量数据。</strong></p>
+<h2 id="三、主要功能"><a href="#三、主要功能" class="headerlink" title="三、主要功能"></a>三、主要功能</h2><h3 id="1-快速搜索相似向量"><a href="#1-快速搜索相似向量" class="headerlink" title="1. 快速搜索相似向量"></a>1. 快速搜索相似向量</h3><ul>
+<li>输入一个向量 → 返回最相似的 Top-K 个（比如前 5 个）</li>
+<li>支持两种”相似”标准：<ul>
+<li><strong>欧氏距离（L2）</strong>：数值越接近越相似（默认）</li>
+<li><strong>内积（IP）</strong>：方向越一致越相似（常用于语义搜索，需提前归一化）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-支持超大数据量"><a href="#2-支持超大数据量" class="headerlink" title="2. 支持超大数据量"></a>2. 支持超大数据量</h3><ul>
+<li>百万、千万、甚至上亿向量都能处理</li>
+<li>内存不够？可以用<strong>压缩技术</strong>（比如 PQ 量化）把向量变小，牺牲一点点精度换速度和省内存</li>
+</ul>
+<h3 id="3-GPU-加速（可选）"><a href="#3-GPU-加速（可选）" class="headerlink" title="3. GPU 加速（可选）"></a>3. GPU 加速（可选）</h3><ul>
+<li>如果你有 NVIDIA 显卡，装 <code>faiss-gpu</code> 版本，搜索速度再提 10 倍+</li>
+</ul>
+<h3 id="4-给向量绑定-ID"><a href="#4-给向量绑定-ID" class="headerlink" title="4. 给向量绑定 ID"></a>4. 给向量绑定 ID</h3><ul>
+<li>默认返回的是”第几个向量”，但你可以给每个向量配一个<strong>自定义 ID</strong>（比如数据库主键、商品 SKU）</li>
+<li>搜索时直接返回你的 ID，不用自己再查一遍</li>
+</ul>
+<h3 id="5-存盘-加载"><a href="#5-存盘-加载" class="headerlink" title="5. 存盘 &amp; 加载"></a>5. 存盘 &amp; 加载</h3><ul>
+<li>建好的索引可以保存到硬盘，下次程序启动直接加载，不用重新建</li>
+</ul>
+<h2 id="四、不能做什么？（常见误区）"><a href="#四、不能做什么？（常见误区）" class="headerlink" title="四、不能做什么？（常见误区）"></a>四、不能做什么？（常见误区）</h2><p>❌ <strong>不能动态频繁增删向量</strong></p>
+<ul>
+<li>大部分高效索引（如 IVF、HNSW）建好后不支持随意插入或删除</li>
+<li>如果你要频繁更新，要么：<ul>
+<li>定期重建索引（适合每天&#x2F;每周更新）</li>
+<li>用简单索引（如 IndexFlat，但慢）</li>
+<li>自己分层管理（新数据放内存，老数据放 FAISS）</li>
+</ul>
+</li>
+</ul>
+<p>❌ <strong>不是数据库</strong></p>
+<ul>
+<li>FAISS 只管”向量相似度”，不管业务逻辑、过滤条件（比如”只要价格&lt;100的商品”）</li>
+<li>实战中通常和数据库配合：FAISS 找候选集 → 数据库过滤+排序</li>
+<li>（正确做法：先用数据库&#x2F;代码过滤出候选向量，再用 FAISS 找最相似的。）</li>
+</ul>
+<h2 id="五、怎么安装？"><a href="#五、怎么安装？" class="headerlink" title="五、怎么安装？"></a>五、怎么安装？</h2><p><strong>情况 1：你只有 CPU（大多数人的电脑）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install faiss-cpu</span><br></pre></td></tr></table></figure>
+
+<p><strong>情况 2：你有 NVIDIA 显卡 + 装了 CUDA（想用 GPU 加速）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install faiss-gpu</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ <strong>注意：</strong></p>
+<ul>
+<li>不要同时装 <code>faiss-cpu</code> 和 <code>faiss-gpu</code>，会冲突。</li>
+<li>如果你不知道有没有 GPU，先装 <code>faiss-cpu</code>，能跑就行。</li>
+</ul>
+<h2 id="五、完整代码"><a href="#五、完整代码" class="headerlink" title="五、完整代码"></a>五、完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第 1 步：导入需要的库</span></span><br><span class="line"><span class="comment"># pip install numpy faiss-cpu</span></span><br><span class="line"><span class="keyword">import</span> faiss</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 2 步：准备&quot;已有数据&quot;——假设你已经有 10,000 个句子的向量</span></span><br><span class="line"><span class="comment"># 每个向量长度是 768（这是 BERT 的常见维度）</span></span><br><span class="line"><span class="comment"># 注意：FAISS 只认 float32 类型（必须转成这个格式）</span></span><br><span class="line">database_vectors = np.random.rand(<span class="number">10_000</span>, <span class="number">768</span>).astype(<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(database_vectors)</span><br><span class="line"><span class="comment"># [[0.397049... 0.67335087 0.6531077 ... 0.8669069  0.8902372  0.99186707]...]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看维度</span></span><br><span class="line"><span class="built_in">print</span>(database_vectors.shape)  <span class="comment"># 查看维度 (10000, 768)</span></span><br><span class="line"><span class="comment"># （这是用随机数代替真实向量，实际项目中，这里是你从模型得到的向量）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 3 步：创建索引（选一个简单又常用的）</span></span><br><span class="line"><span class="comment"># IndexFlatIP 表示：用&quot;内积&quot;算相似度（适合语义搜索）</span></span><br><span class="line">index = faiss.IndexFlatIP(<span class="number">768</span>)  <span class="comment"># 768 是向量维度，必须写对！</span></span><br><span class="line"><span class="built_in">print</span>(index)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 4 步：【关键】如果你用的是 IndexFlatIP（内积），必须先把所有向量&quot;归一化&quot;</span></span><br><span class="line"><span class="comment"># 归一化后，内积 = 余弦相似度，值在 [-1, 1] 之间，越大越相似</span></span><br><span class="line">faiss.normalize_L2(database_vectors)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 5 步：把你的向量&quot;加&quot;进索引（相当于建库）</span></span><br><span class="line">index.add(database_vectors)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;已加载 <span class="subst">&#123;index.ntotal&#125;</span> 个向量&quot;</span>)  <span class="comment"># 输出：已加载 10000 个向量</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 6 步：准备你要搜索的新向量（比如用户输入的问题）</span></span><br><span class="line">query_vector = np.random.rand(<span class="number">1</span>, <span class="number">768</span>).astype(<span class="string">&#x27;float32&#x27;</span>)  <span class="comment"># 1 个 768 维向量</span></span><br><span class="line">faiss.normalize_L2(query_vector)  <span class="comment"># 同样要归一化！</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 7 步：执行搜索！找最相似的前 3 个</span></span><br><span class="line">k = <span class="number">3</span></span><br><span class="line">similarities, indices = index.search(query_vector, k)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 8 步：看结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最相似的向量在数据库中的位置（索引）：&quot;</span>, indices[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;对应的相似度分数（越接近 1 越相似）：&quot;</span>, similarities[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出结果：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[[0.2605693  0.4263211  0.90267324 ... 0.8711926  0.09718457 0.56775576]</span><br><span class="line"> [0.84819    0.55824995 0.4964657  ... 0.63748216 0.40826654 0.78413224]</span><br><span class="line"> [0.6929131  0.6249243  0.17195596 ... 0.6605481  0.81343377 0.8747826 ]]</span><br><span class="line"></span><br><span class="line">(10000, 768)</span><br><span class="line">&lt;faiss.swigfaiss.IndexFlatIP; proxy of &lt;Swig Object of type &#x27;faiss::IndexFlatIP *&#x27; at 0x1055649c0&gt; &gt;</span><br><span class="line">已加载 10000 个向量</span><br><span class="line">最相似的向量在数据库中的位置（索引）：[9284 1897 9108]</span><br><span class="line">对应的相似度分数（越接近 1 越相似）：[0.78536322 0.78344375 0.7832435 ]</span><br></pre></td></tr></table></figure>
+
+<h2 id="整体目标："><a href="#整体目标：" class="headerlink" title="整体目标："></a>整体目标：</h2><p>给一个句子（向量），在 1 万个句子里快速找出最像它的 3 个。</p>
+<ol>
+<li><strong>导入工具</strong> → 用 FAISS（搜向量）和 NumPy（处理数字）</li>
+<li><strong>准备数据</strong> → 假设你有 1 万个句子，每个都被 AI 转成一串 768 个数字（叫”向量”）→ 强制转成 float32 格式（FAISS 的硬性要求）</li>
+<li><strong>建搜索”引擎”</strong> → 选 IndexFlatIP：适合比”语义相似度”（比如两句话意思像不像）</li>
+<li><strong>标准化向量</strong> → 把所有向量”拉到同一个尺度”（归一化）→ 这样”内积”就等于”余弦相似度”：结果越接近 1，越像</li>
+<li><strong>把数据喂给引擎</strong> → <code>index.add(...)</code> 相当于”建好数据库”</li>
+<li><strong>准备你要搜的新句子</strong> → 也转成 768 维向量 + 同样做归一化！</li>
+<li><strong>开始搜索</strong> → 问：”哪 3 个最像这个新句子？” → FAISS 返回：位置编号 + 相似分数</li>
+<li><strong>看结果</strong> → 比如：第 500、2301、8899 号句子最像，相似度分别是 0.92、0.89、0.85</li>
+</ol>
+<h2 id="六、怎么选索引？"><a href="#六、怎么选索引？" class="headerlink" title="六、怎么选索引？"></a>六、怎么选索引？</h2><table>
+<thead>
+<tr>
+<th>你的数据有多少？</th>
+<th>你最关心什么？</th>
+<th>推荐用哪个索引？</th>
+<th>为什么？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>少于 1 万条向量<br>（比如几千个商品、文章）</td>
+<td>“我数据不多，但要结果绝对准确”<br>（比如做实验、小工具）</td>
+<td>IndexFlatL2<br>或<br>IndexFlatIP</td>
+<td>这是最简单的”暴力搜索”：<br>把所有向量都比一遍<br>结果 100% 准确<br>数据少，所以也不慢</td>
+</tr>
+<tr>
+<td>1 万 ~ 100 万条<br>（比如一个中型推荐系统）</td>
+<td>“我要快！准不准稍微差一点没关系”<br>（比如用户搜东西，不能等）</td>
+<td>IndexIVFFlat</td>
+<td>它先把向量分成 100<del>1000 组（叫”聚类”），<br>搜索时只查其中几组，速度提升 10</del>100 倍，<br>结果和精确搜索几乎一样好</td>
+</tr>
+<tr>
+<td>超过 100 万条<br>（比如百万用户、千万商品）</td>
+<td>“内存不够 &#x2F; 必须极快响应”<br>（比如大厂线上服务）</td>
+<td>IndexIVFPQ<br>或<br>IndexHNSW</td>
+<td>- IVFPQ：把向量压缩成更短的编码，省内存 + 更快<br>- HNSW：用图结构预建”快捷路径”，查得飞快<br>⚠️ 两者都会损失一点点精度，但通常不影响业务</td>
+</tr>
+<tr>
+<td>你有 NVIDIA 显卡<br>（且装了 CUDA）</td>
+<td>“我要在 GPU 上跑，榨干性能”</td>
+<td>安装 faiss-gpu<br>然后用 IndexIVFFlat</td>
+<td>GPU 能并行算成千上万个距离，<br>比 CPU 快 10~50 倍，<br>适合高并发或超大数据</td>
+</tr>
+</tbody></table>
+<h3 id="1-L2-和-IP-到底怎么选？"><a href="#1-L2-和-IP-到底怎么选？" class="headerlink" title="1. L2 和 IP 到底怎么选？"></a>1. L2 和 IP 到底怎么选？</h3><ul>
+<li><strong>用 IndexFlatL2</strong>：如果你的向量没有归一化，或者你关心”数值差距”（比如图像特征）</li>
+<li><strong>用 IndexFlatIP</strong>：如果你的向量已经归一化（长度&#x3D;1），并且你关心”方向&#x2F;语义相似度”（比如文本 embedding）</li>
+</ul>
+<p>✅ <strong>简单记：</strong></p>
+<ul>
+<li>做语义搜索（文字、句子）→ 用 IP + 归一化</li>
+<li>做图像、音频原始特征 → 用 L2</li>
+</ul>
+<h3 id="几种-FAISS-索引的对比："><a href="#几种-FAISS-索引的对比：" class="headerlink" title="几种 FAISS 索引的对比："></a>几种 FAISS 索引的对比：</h3><table>
+<thead>
+<tr>
+<th>索引类型</th>
+<th>通俗解释</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IndexFlatL2</td>
+<td>暴力比：把所有向量一个个算”距离”，找最近的</td>
+<td>数据少（&lt;1万），要绝对准确</td>
+</tr>
+<tr>
+<td>IndexFlatIP</td>
+<td>暴力比：把所有向量一个个算”方向相似度”（余弦）</td>
+<td>做文本语义搜索，且向量已归一化</td>
+</tr>
+<tr>
+<td>IndexIVFFlat</td>
+<td>先分100组，只查最相关的几组，组内暴力比</td>
+<td>中等数据（1万~100万），又快又准</td>
+</tr>
+<tr>
+<td>IndexIVFPQ</td>
+<td>分组 + 把向量压缩变短，省内存、更快</td>
+<td>超大数据（&gt;100万），内存有限，可接受稍不准</td>
+</tr>
+<tr>
+<td>IndexHNSW</td>
+<td>预先建”快捷导航图”，搜索时快速跳到相似项</td>
+<td>要极致快，内存够，不需频繁更新</td>
+</tr>
+</tbody></table>
+<p>💡 <strong>补充：</strong></p>
+<ul>
+<li>L2：看数值差距（适合图像等原始特征）</li>
+<li>IP：看方向&#x2F;语义（适合文本，记得先归一化！）</li>
+<li>带 IVF 的都能用 <code>nprobe</code> 控制”查几组” → 越大越准越慢</li>
+<li>别一上来就用 PQ 或 HNSW，先用 IndexIVFFlat 足够应付大多数场景</li>
+</ul>
+<h3 id="注意：LangChain-的封装"><a href="#注意：LangChain-的封装" class="headerlink" title="注意：LangChain 的封装"></a>注意：LangChain 的封装</h3><p>LangChain 为了方便用户，把 FAISS 的复杂细节都藏起来了。</p>
+<p><strong>具体表现为：</strong></p>
+<ol>
+<li><strong>不直接选索引</strong>：你在 LangChain 里看不到 IndexFlatL2、IndexHNSW 这些具体的索引名字。</li>
+<li><strong>默认用简单的</strong>：当你用 <code>FAISS.from_texts()</code> 创建数据库时，LangChain 会自动、默认地帮你选择最简单的 IndexFlatL2 索引。</li>
+<li><strong>优缺点</strong>：<ul>
+<li>优点：简单、精确，适合数据量不大的情况（几万到几十万条）。</li>
+<li>缺点：数据量一大（上百万、上亿），搜索速度就会变得非常慢。</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>FAISS &#x3D; 向量搜索引擎</strong></li>
+<li><strong>核心能力</strong>：快 + 准 + 能扛大数据</li>
+<li><strong>典型用途</strong>：RAG 知识召回、推荐系统、以图搜图</li>
+<li><strong>记住三点</strong>：<ol>
+<li>向量必须是 <code>float32</code></li>
+<li>用 IP 就要先 <code>normalize_L2</code></li>
+<li>大多数索引建完就不能随便改，规划好更新策略</li>
+</ol>
+</li>
+</ul>
+<hr>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/3e2b.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Transformer</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/blogs/21bd.html" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">RAG</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://cdn.jsdelivr.net/gh/chenthesky/blog-img/%E5%A4%B4%E5%83%8F.png" class="soft-size--round soft-style--box" alt="LeoskyC">
+    
+    
+      <h2>LeoskyC</h2>
+    
+    
+      <p>学习新思想，争做好青年</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>25</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        2
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        8
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">一、定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%83%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">二、它解决什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-number">3.</span> <span class="toc-text">三、主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2%E7%9B%B8%E4%BC%BC%E5%90%91%E9%87%8F"><span class="toc-number">3.1.</span> <span class="toc-text">1. 快速搜索相似向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%94%AF%E6%8C%81%E8%B6%85%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%87%8F"><span class="toc-number">3.2.</span> <span class="toc-text">2. 支持超大数据量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-GPU-%E5%8A%A0%E9%80%9F%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">3. GPU 加速（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%BB%99%E5%90%91%E9%87%8F%E7%BB%91%E5%AE%9A-ID"><span class="toc-number">3.4.</span> <span class="toc-text">4. 给向量绑定 ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AD%98%E7%9B%98-%E5%8A%A0%E8%BD%BD"><span class="toc-number">3.5.</span> <span class="toc-text">5. 存盘 &amp; 加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8D%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F%EF%BC%88%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">四、不能做什么？（常见误区）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E5%AE%89%E8%A3%85%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">五、怎么安装？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">五、完整代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E7%9B%AE%E6%A0%87%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">整体目标：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">六、怎么选索引？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-L2-%E5%92%8C-IP-%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">1. L2 和 IP 到底怎么选？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D-FAISS-%E7%B4%A2%E5%BC%95%E7%9A%84%E5%AF%B9%E6%AF%94%EF%BC%9A"><span class="toc-number">8.2.</span> <span class="toc-text">几种 FAISS 索引的对比：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9ALangChain-%E7%9A%84%E5%B0%81%E8%A3%85"><span class="toc-number">8.3.</span> <span class="toc-text">注意：LangChain 的封装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+</section>
+
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+            学习笔记 (18)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E6%95%99%E7%A8%8B/">
+            教程 (5)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/Hadoop/" style="font-size: 13.33px;" class="tags-cloud-3">Hadoop</a> <a href="/tags/Python/" style="font-size: 16.67px;" class="tags-cloud-7">Python</a> <a href="/tags/RAG/" style="font-size: 10px;" class="tags-cloud-0">RAG</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.67px;" class="tags-cloud-7">人工智能</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 16.67px;" class="tags-cloud-7">前端</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.33px;" class="tags-cloud-3">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;" class="tags-cloud-10">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 13.33px;" class="tags-cloud-3">机器学习</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/chenthesky" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>&copy; 2026 <a href="/" target="_blank">LeoskyC</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<div>
+    <link rel="stylesheet" href="/dist/APlayer.min.css"> 
+    <div id="aplayer"></div>
+    <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/dplayer@1.27.1/dist/DPlayer.min.js"></script>
+    <script type="text/javascript" src="/js/diy/music.js"></script>
+</div>
+<div>    
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+</div>
+
+
+
+</body>
+  <script>
+  // 对所有链接跳转事件绑定pjax容器pjax-container 
+    $(document).pjax('a', '#pjax-container', {
+      fragment:'#pjax-container',
+      timeout:8000
+      });
+    // $(document).on('ready pjax:beforeReplace', function (event) {
+    //   valine.setPath(pathname);
+    //   });   
+  </script> 
+</html>
